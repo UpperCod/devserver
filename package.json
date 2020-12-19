@@ -1,10 +1,11 @@
 {
   "name": "@atomico/cli",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "example:dev": "node src/cli.js dev example",
     "example:build": "node src/cli.js build example/*.html public",
+    "example:server": "npm run example:build && serve public",
     "build": "rollup -c",
     "prepare": "npm run build"
   },
@@ -21,15 +22,15 @@
     "@uppercod/exp-route": "^1.2.x",
     "@uppercod/replace-import": "^0.1.1",
     "mime": "^2.4.7",
-    "sade": "^1.7.4",
-    "serve": "^11.3.2"
+    "sade": "^1.7.4"
   },
   "devDependencies": {
     "@atomico/build": "^0.0.0",
     "@rollup/plugin-replace": "^2.3.4",
     "atomico": "^1.9.1",
     "ava": "^3.14.0",
-    "rollup": "^2.35.1"
+    "rollup": "^2.35.1",
+    "serve": "^11.3.2"
   },
   "peerDependencies": {
     "@atomico/build": "^0.0.0"
