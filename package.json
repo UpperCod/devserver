@@ -1,0 +1,32 @@
+{
+  "name": "webox",
+  "type": "module",
+  "engines": {
+    "node": ">=15.x"
+  },
+  "scripts": {
+    "server": "node src/cli.js dev example"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "UpperCod",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/UpperCod/webox.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "atomico": "^1.9.1",
+    "ava": "^3.14.0"
+  },
+  "dependencies": {
+    "@uppercod/exp-route": "^1.2.x",
+    "@uppercod/replace-import": "^0.1.1",
+    "mime": "^2.4.7",
+    "sade": "^1.7.4"
+  },
+  "bin": {
+    "webox": "./cli.js"
+  }
+}
