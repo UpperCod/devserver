@@ -1,11 +1,11 @@
 {
-  "name": "webox",
+  "name": "@atomico/cli",
   "type": "module",
-  "engines": {
-    "node": ">=15.x"
-  },
+  "version": "0.0.0",
   "scripts": {
-    "server": "node src/cli.js dev example"
+    "example": "node src/cli.js dev example",
+    "build": "rollup -c",
+    "prepare": "npm run build"
   },
   "publishConfig": {
     "access": "public"
@@ -17,8 +17,10 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@rollup/plugin-replace": "^2.3.4",
     "atomico": "^1.9.1",
-    "ava": "^3.14.0"
+    "ava": "^3.14.0",
+    "rollup": "^2.35.1"
   },
   "dependencies": {
     "@uppercod/exp-route": "^1.2.x",
@@ -27,6 +29,6 @@
     "sade": "^1.7.4"
   },
   "bin": {
-    "webox": "./cli.js"
+    "atomico": "./cli.js"
   }
 }
