@@ -27,4 +27,17 @@ command
     });
   });
 
+command
+  .command("build <src> <dist>")
+  .option("--minify", "minify the js code", false)
+  .option(
+    "--href",
+    "associates a prefix for the output of assets declared in html files",
+    ""
+  )
+  .action(async (src = "./", dist, { minify, href }) => {
+    const { createBuild } = await import("@atomico/build");
+    createBuild({ src, dist, minify, href });
+  });
+
 command.parse(process.argv);

@@ -3,7 +3,8 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "example": "node src/cli.js dev example",
+    "example:dev": "node src/cli.js dev example",
+    "example:build": "node src/cli.js build example/*.html public",
     "build": "rollup -c",
     "prepare": "npm run build"
   },
@@ -16,17 +17,22 @@
     "url": "git+ssh://git@github.com/UpperCod/webox.git"
   },
   "license": "ISC",
+  "dependencies": {
+    "@uppercod/exp-route": "^1.2.x",
+    "@uppercod/replace-import": "^0.1.1",
+    "mime": "^2.4.7",
+    "sade": "^1.7.4",
+    "serve": "^11.3.2"
+  },
   "devDependencies": {
+    "@atomico/build": "^0.0.0",
     "@rollup/plugin-replace": "^2.3.4",
     "atomico": "^1.9.1",
     "ava": "^3.14.0",
     "rollup": "^2.35.1"
   },
-  "dependencies": {
-    "@uppercod/exp-route": "^1.2.x",
-    "@uppercod/replace-import": "^0.1.1",
-    "mime": "^2.4.7",
-    "sade": "^1.7.4"
+  "peerDependencies": {
+    "@atomico/build": "^0.0.0"
   },
   "bin": {
     "atomico": "./cli.js"
