@@ -14,7 +14,7 @@ command
 
     log(`DEV server running on http://localhost:${devServer.port}`);
 
-    const watchLog = () => log(`Watcher waiting for changes ...`);
+    const watchLog = () => log(`Watcher waiting for changes...`);
 
     watchLog();
 
@@ -37,7 +37,9 @@ command
   )
   .action(async (src = "./", dist, { minify, href }) => {
     const { createBuild } = await import("@atomico/build");
+    log(`Build starting from ${src} to ${dist}...`);
     createBuild({ src, dist, minify, href });
+    log(`Build completed!`);
   });
 
 command.parse(process.argv);
