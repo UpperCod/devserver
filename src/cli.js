@@ -35,10 +35,17 @@ command
     "associates a prefix for the output of assets declared in html files",
     ""
   )
-  .action(async (src = "./", dist, { minify, href }) => {
+  .options("--external", "allows adding external dependencies manually", "")
+  .action(async (src = "./", dist, { minify, href, external }) => {
     const { createBuild } = await import("@atomico/build");
     log(`Build starting from ${src} to ${dist}...`);
-    createBuild({ src, dist, minify, href });
+    createBuild({
+      src,
+      dist,
+      minify,
+      href,
+      external: external ? external.split(/ *, */) : false,
+    });
     log(`Build completed!`);
   });
 
