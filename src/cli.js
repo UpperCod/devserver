@@ -8,9 +8,14 @@ const command = sade("my-cli").version("PKG.VERSION");
 command
   .command("dev <src>")
   .option("--port", "port for  server", 80)
-  .option("--spa", "port for  server", "")
-  .action(async (base = "./", { port, spa }) => {
-    const devServer = await createServer({ port, base, spa });
+  .option("--spa", "page to resolve lost requests", "")
+  .option(
+    "--cdn",
+    "Enables the use of CDN avoiding the need to install the PKG",
+    false
+  )
+  .action(async (base = "./", { port, spa, cdn }) => {
+    const devServer = await createServer({ port, base, spa, cdn });
 
     log(`DEV server running on http://localhost:${devServer.port}`);
 
@@ -35,7 +40,7 @@ command
     "associates a prefix for the output of assets declared in html files",
     ""
   )
-  .options("--external", "allows adding external dependencies manually", "")
+  .option("--external", "allows adding external dependencies manually", "")
   .action(async (src = "./", dist, { minify, href, external }) => {
     const { createBuild } = await import("@atomico/build");
     log(`Build starting from ${src} to ${dist}...`);

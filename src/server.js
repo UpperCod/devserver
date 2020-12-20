@@ -23,9 +23,16 @@ let responses = [];
  * @param {number} port
  * @param {string} spa
  */
-export const createServer = ({ base, port, spa }) => {
+export const createServer = ({ base, port, spa, cdn }) => {
   // File to display for unresolved routes
   const notFound = join(base, spa || "404.html");
+  // redirect NPM content
+  const localResolve = (value) =>
+    /^(\.|\/)/.test(value)
+      ? value
+      : cdn
+      ? `https://jspm.dev/${value}`
+      : `/npm/${value}`;
 
   return new Promise((ready) =>
     server((req, res) => {
@@ -57,8 +64,7 @@ export const createServer = ({ base, port, spa }) => {
                 const code = await replaceImport({
                   file,
                   code: await readFile(file, "utf8"),
-                  resolve: (value) =>
-                    /^(\.|\/)/.test(value) ? value : `/npm/${value}`,
+                  resolve: localResolve,
                 });
 
                 res.end(code);
@@ -75,8 +81,7 @@ export const createServer = ({ base, port, spa }) => {
               const code = await replaceImport({
                 file,
                 code: await readFile(file, "utf8"),
-                resolve: (value) =>
-                  /^(\.|\/)/.test(value) ? value : `/npm/${value}`,
+                resolve: localResolve,
               });
 
               res.end(code);

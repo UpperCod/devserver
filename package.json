@@ -1,9 +1,9 @@
 {
   "name": "@atomico/cli",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
-    "example:dev": "node src/cli.js dev example",
+    "example:dev": "node src/cli.js dev example --cdn",
     "example:build": "node src/cli.js build example/*.html public",
     "example:server": "npm run example:build && serve public",
     "build": "rollup -c",
