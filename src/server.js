@@ -28,7 +28,7 @@ export const createServer = ({ base, port, spa, cdn }) => {
   const notFound = join(base, spa || "404.html");
   // redirect NPM content
   const localResolve = (value) =>
-    /^(\.|\/)/.test(value)
+    /^(\.|\/|http(s){0,1}\:\/\/)/.test(value)
       ? value
       : cdn
       ? `https://jspm.dev/${value}`
