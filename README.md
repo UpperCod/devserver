@@ -1,4 +1,4 @@
-# webox
+# @atomico/cli
 
 dev-server to create applications, sites or prototypes using only JS, HTML and CSS, **No transpilation**.
 
@@ -24,16 +24,16 @@ function component() {
 ## Dev mode
 
 ```bash
-npx webox dev src
+npx atomico dev src
 ```
 
 ## Build mode
 
 ```bash
 # step 1
-npm install @estack/build
+npm install @atomico/build
 # step 2
-npx webox build src/*.html public
+npx atomico build src/*.html public
 ```
 
 The export is selective using expressions or the file directly.

@@ -1,7 +1,7 @@
 {
   "name": "@atomico/cli",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "scripts": {
     "example:dev": "node src/cli.js dev example --cdn",
     "example:build": "node src/cli.js build example/*.html public",
