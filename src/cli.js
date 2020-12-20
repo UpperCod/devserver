@@ -41,7 +41,12 @@ command
     ""
   )
   .option("--external", "allows adding external dependencies manually", "")
-  .action(async (src = "./", dist, { minify, href, external }) => {
+  .option(
+    "--cdn",
+    "Enables the use of CDN avoiding the need to install the PKG",
+    false
+  )
+  .action(async (src = "./", dist, { minify, href, external, cdn }) => {
     const { createBuild } = await import("@atomico/build");
     log(`Build starting from ${src} to ${dist}...`);
     createBuild({
@@ -50,6 +55,7 @@ command
       minify,
       href,
       external: external ? external.split(/ *, */) : false,
+      cdn,
     });
     log(`Build completed!`);
   });

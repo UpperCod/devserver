@@ -1,7 +1,7 @@
 {
   "name": "@atomico/cli",
   "type": "module",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "scripts": {
     "example:dev": "node src/cli.js dev example --cdn",
     "example:build": "node src/cli.js build example/*.html public",
@@ -24,7 +24,7 @@
     "sade": "^1.7.4"
   },
   "devDependencies": {
-    "@atomico/build": "^0.1.0",
+    "@atomico/build": "^0.2.0",
     "@betit/rollup-plugin-rename-extensions": "^0.1.0",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
