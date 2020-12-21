@@ -7,9 +7,7 @@ export function routes(cases, value) {
     cache[prop] = cache[prop] || createMatch(prop);
     const params = cache[prop](value);
     if (params) {
-      cases[prop](params);
-      return;
+      return cases[prop](params);
     }
   }
-  if (cases["default"]) cases["default"]();
 }

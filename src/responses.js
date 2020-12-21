@@ -1,4 +1,5 @@
 import mime from "mime";
+import { createReadStream } from "fs";
 /**
  *
  * @param {import("http").ServerResponse} res
@@ -52,3 +53,17 @@ export const setCache = (res, duration) =>
  * @param {number} duration
  */
 export const setNoCache = (res) => res.setHeader("Cache-Control", "no-cache");
+/**
+ *
+ * @param {import("http").ServerResponse} res
+ * @param {string} file
+ */
+export const sendStream = (res, file) =>
+  new Promise((resolve, reject) => {
+    const readStream = createReadStream(file);
+    readStream.on("open", () => {
+      readStream.pipe(res);
+      resolve();
+    });
+    readStream.on("error", reject);
+  });

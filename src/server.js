@@ -1,5 +1,4 @@
 import { join } from "path";
-import { createReadStream } from "fs";
 import { readFile } from "fs/promises";
 import { createServer as server } from "http";
 import { replaceImport } from "@uppercod/replace-import";
@@ -8,6 +7,7 @@ import { routes } from "./routes.js";
 import {
   setCache,
   setNoCache,
+  sendStream,
   setRedirect,
   sendMessage,
   setKeepAlive,
@@ -35,32 +35,50 @@ export const createServer = ({ base, port, spa, cdn }) => {
       : `/npm/${value}`;
 
   return new Promise((ready) =>
-    server((req, res) => {
+    server(async (req, res) => {
       const src = pathname(req.url);
-      routes(
-        {
-          "/favicon.ico": () => res.end(""),
-          "/livereload": () => {
-            setKeepAlive(res);
-            // Send an initial ack event to stop any network request pending
-            sendMessage(res, "connected", "awaiting change");
-            // Send a ping event every minute to prevent console errors
-            setInterval(sendMessage, 60000, res, "ping", "still waiting");
-            // Watch the target directory for changes and trigger reload
-            responses.push(res);
-          },
-          "/npm/{...pkg}": async ({ pkg }) => {
-            setCache(res, 600);
+      try {
+        await routes(
+          {
+            "/favicon.ico": () => res.end(""),
+            "/livereload": () => {
+              setKeepAlive(res);
+              // Send an initial ack event to stop any network request pending
+              sendMessage(res, "connected", "awaiting change");
+              // Send a ping event every minute to prevent console errors
+              setInterval(sendMessage, 60000, res, "ping", "still waiting");
+              // Watch the target directory for changes and trigger reload
+              responses.push(res);
+            },
+            "/npm/{...pkg}": async ({ pkg }) => {
+              setCache(res, 600);
 
-            const [, folder, subpathname] = pkg.match(packageName);
-            const npmFolder = [folder, subpathname].join("/");
+              const [, folder, subpathname] = pkg.match(packageName);
+              const npmFolder = [folder, subpathname].join("/");
 
-            if (pkg != npmFolder) {
-              setRedirect(res, npmFolder);
-            } else {
-              const file = await resolve(pkg);
-              setContentType(res, file.href);
-              if (file.href.endsWith(".js")) {
+              if (pkg != npmFolder) {
+                setRedirect(res, npmFolder);
+              } else {
+                const file = await resolve(pkg);
+                setContentType(res, file.href);
+                if (file.href.endsWith(".js")) {
+                  const code = await replaceImport({
+                    file,
+                    code: await readFile(file, "utf8"),
+                    resolve: localResolve,
+                  });
+
+                  res.end(code);
+                } else {
+                  return sendStream(res, file);
+                }
+              }
+            },
+            "/[...local]": async ({ local }) => {
+              const file = join(base, addDefaultIndex(local, ".html"));
+              setNoCache(res);
+              setContentType(res, file);
+              if (file.endsWith(".js")) {
                 const code = await replaceImport({
                   file,
                   code: await readFile(file, "utf8"),
@@ -68,41 +86,28 @@ export const createServer = ({ base, port, spa, cdn }) => {
                 });
 
                 res.end(code);
-              } else {
-                createReadStream(file).pipe(res);
-              }
-            }
-          },
-          "/[...local]": async ({ local }) => {
-            const file = join(base, addDefaultIndex(local, ".html"));
-            setNoCache(res);
-            setContentType(res, file);
-            if (file.endsWith(".js")) {
-              const code = await replaceImport({
-                file,
-                code: await readFile(file, "utf8"),
-                resolve: localResolve,
-              });
-
-              res.end(code);
-            } else if (file.endsWith(".html")) {
-              const code = await readFile(file, "utf8").catch(() =>
-                readFile(notFound, "utf8")
-              );
-              const reload = `
+              } else if (file.endsWith(".html")) {
+                const code = await readFile(file, "utf8").catch(() =>
+                  readFile(notFound, "utf8")
+                );
+                const reload = `
                 <script>{
                 let source = new EventSource('http://localhost:${port}/livereload');
                 source.onmessage = e =>  setTimeout(()=>location.reload(),250);
                 }</script>
               `;
-              res.end(code + reload);
-            } else {
-              createReadStream(file).pipe(res);
-            }
+                res.end(code + reload);
+              } else {
+                return sendStream(res, file);
+              }
+            },
           },
-        },
-        src
-      );
+          src
+        );
+      } catch (e) {
+        res.statusCode = 404;
+        res.end("");
+      }
     }).listen(port, () =>
       ready({
         port,
