@@ -5,19 +5,30 @@ import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json";
 
+/**
+ * remove part of the code without affecting the sourcemap
+ * @param {string} str
+ */
+const pluginRemoveEnv = (str) => ({
+  name: "remove-env",
+  transform: (code) => code.replace(str, " ".repeat(str.length)),
+});
+
 export default {
   input: "./src/cli.js",
   output: {
     dir: "./",
     format: "cjs",
-    sourcemap: true,
+    sourcemap: false,
     banner: "#!/usr/bin/env node",
   },
   external: Object.keys(pkg.dependencies).concat("@atomico/build"),
   plugins: [
+    pluginRemoveEnv("#!/usr/bin/env node"),
     replace({
       "PKG.VERSION": pkg.version,
     }),
+
     resolve(),
     commonjs(),
     renameExtensions({
@@ -26,5 +37,6 @@ export default {
         ".js": ".cjs",
       },
     }),
+    terser(),
   ],
 };

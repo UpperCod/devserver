@@ -1,6 +1,7 @@
 import { join } from "path";
 import { readFile } from "fs/promises";
-import { createServer as server } from "http";
+import { createServer as serverHttp } from "http";
+import { createSecureServer as serverHttp2 } from "http2";
 import { replaceImport } from "@uppercod/replace-import";
 import { resolve, packageName } from "@uppercod/replace-import/resolve";
 import { routes } from "./routes.js";
@@ -23,7 +24,7 @@ let responses = [];
  * @param {number} port
  * @param {string} spa
  */
-export const createServer = ({ base, port, spa, cdn }) => {
+export const createServer = ({ base, port, spa, cdn, cert }) => {
   // File to display for unresolved routes
   const notFound = join(base, spa || "404.html");
   // redirect NPM content
@@ -34,8 +35,8 @@ export const createServer = ({ base, port, spa, cdn }) => {
       ? `https://jspm.dev/${value}`
       : `/npm/${value}`;
 
-  return new Promise((ready) =>
-    server(async (req, res) => {
+  return new Promise((ready) => {
+    const handler = async (req, res) => {
       const src = pathname(req.url);
       try {
         await routes(
@@ -108,7 +109,8 @@ export const createServer = ({ base, port, spa, cdn }) => {
         res.statusCode = 404;
         res.end("");
       }
-    }).listen(port, () =>
+    };
+    (cert ? serverHttp2(cert, handler) : serverHttp(handler)).listen(port, () =>
       ready({
         port,
         reload() {
@@ -116,6 +118,6 @@ export const createServer = ({ base, port, spa, cdn }) => {
           responses = [];
         },
       })
-    )
-  );
+    );
+  });
 };

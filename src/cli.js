@@ -1,4 +1,5 @@
 import sade from "sade";
+import { createSSL } from "./ssl.js";
 import { createServer } from "./server.js";
 import { createWatch } from "./watch.js";
 import { log } from "./utils.js";
@@ -9,15 +10,22 @@ command
   .command("dev <src>")
   .option("--port", "port for  server", 80)
   .option("--spa", "page to resolve lost requests", "")
+  .option("--ssl", "page to resolve lost requests", false)
   .option(
     "--cdn",
     "Enables the use of CDN avoiding the need to install the PKG",
     false
   )
-  .action(async (base = "./", { port, spa, cdn }) => {
-    const devServer = await createServer({ port, base, spa, cdn });
+  .action(async (base = "./", { port, spa, cdn, ssl }) => {
+    const cert = ssl ? await createSSL(`localhost`) : false;
 
-    log(`DEV server running on http://localhost:${devServer.port}`);
+    const devServer = await createServer({ port, base, spa, cdn, cert });
+
+    log(
+      `DEV server running on ${ssl ? "https" : "http"}://localhost:${
+        devServer.port
+      }`
+    );
 
     const watchLog = () => log(`Watcher waiting for changes...`);
 
