@@ -4,12 +4,11 @@ import { createReadStream } from "fs";
  *
  * @param {import("http").ServerResponse} res
  */
-export const setKeepAlive = (res) =>
+export const setKeepAlive = (res, isSSL) =>
   res.writeHead(200, {
-    Connection: "keep-alive",
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",
-    "Access-Control-Allow-Origin": "*",
+    ...(isSSL ? {} : { Connection: "keep-alive" }),
   });
 /**
  *

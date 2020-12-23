@@ -36,6 +36,11 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
       : `/npm/${value}`;
 
   return new Promise((ready) => {
+    /**
+     *
+     * @param {import("http").IncomingMessage} req
+     * @param {import("http").ServerResponse} res
+     */
     const handler = async (req, res) => {
       const src = pathname(req.url);
       try {
@@ -43,7 +48,7 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
           {
             "/favicon.ico": () => res.end(""),
             "/livereload": () => {
-              setKeepAlive(res);
+              setKeepAlive(res, !!cert);
               // Send an initial ack event to stop any network request pending
               sendMessage(res, "connected", "awaiting change");
               // Send a ping event every minute to prevent console errors
@@ -93,7 +98,7 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
                 );
                 const reload = `
                 <script>{
-                let source = new EventSource('http://localhost:${port}/livereload');
+                let source = new EventSource('/livereload');
                 source.onmessage = e =>  setTimeout(()=>location.reload(),250);
                 }</script>
               `;

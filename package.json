@@ -1,7 +1,7 @@
 {
   "name": "@atomico/cli",
   "type": "module",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "scripts": {
     "example:dev": "node src/cli.js dev example --cdn --ssl",
     "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl",
