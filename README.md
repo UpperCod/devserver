@@ -48,10 +48,6 @@ customElements.define("custom-element", c(component));
 
 **The files are manipulated on demand of the HTML, the transformations are limited to only solve the imports.**
 
-```js
-import { MyComponent } from "./my-component.js";
-```
-
 ## Dev mode
 
 Development mode launches a server whose file context is associated with a specific folder.
@@ -66,9 +62,10 @@ npm devserver dev site
 
 ### Options
 
-| flag | descripcion |
+| flag    | descripcion                              |
+| ------- | ---------------------------------------- |
 | `--cdn` | NPM dependencies are resolved from a CDN |
-| `--ssl` | enable the use of http2 + ssl |
+| `--ssl` | enable the use of http2 + ssl            |
 
 ## Build mode
 
@@ -83,9 +80,10 @@ The export is selective based on expressions, always keep in the expression an o
 
 ### Options
 
-| flag | descripcion |
-| `--href` | Add a path prefix for assets in an HTML file |
-| `--minify` | minify the js code |
+| flag       | descripcion                                  |
+| ---------- | -------------------------------------------- |
+| `--href`   | Add a path prefix for assets in an HTML file |
+| `--minify` | minify the js code                           |
 
 ## Module import rule.
 
