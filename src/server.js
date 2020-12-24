@@ -2,8 +2,8 @@ import { join } from "path";
 import { readFile } from "fs/promises";
 import { createServer as serverHttp } from "http";
 import { createSecureServer as serverHttp2 } from "http2";
-import { replaceImport } from "@uppercod/replace-import";
-import { resolve, packageName } from "@uppercod/replace-import/resolve";
+import { replaceImport } from "@devserver/replace-import";
+import { resolve, packageName } from "@devserver/replace-import/resolve";
 import { routes } from "./routes.js";
 import {
   setCache,

@@ -55,7 +55,7 @@ command
     false
   )
   .action(async (src = "./", dist, { minify, href, external, cdn }) => {
-    const { createBuild } = await import("@atomico/build");
+    const { createBuild } = await import("@devserver/build");
     log(`Build starting from ${src} to ${dist}...`);
     createBuild({
       src,

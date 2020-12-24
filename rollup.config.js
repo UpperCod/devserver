@@ -22,7 +22,7 @@ export default {
     sourcemap: false,
     banner: "#!/usr/bin/env node",
   },
-  external: Object.keys(pkg.dependencies).concat("@atomico/build"),
+  external: Object.keys(pkg.dependencies).concat("@devserver/build"),
   plugins: [
     pluginRemoveEnv("#!/usr/bin/env node"),
     replace({
