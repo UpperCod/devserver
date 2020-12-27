@@ -33,7 +33,7 @@ export async function createBuild({
 
     const [input, html] = (await glob(src)).reduce(
         (list, file) => {
-            list[file.endsWith(".html") ? 1 : 0].push(file);
+            list[file.endsWith(".html") ? 1 : 0].push("./" + file);
             return list;
         },
         [[], []]
