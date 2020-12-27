@@ -8,7 +8,6 @@
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl",
         "example:build": "node src/cli.js build example/*.html public",
         "test": "ava",
-        "build": "rollup -c",
         "prepare": "pnpm run build -r && pnpm run test"
     },
     "publishConfig": {
