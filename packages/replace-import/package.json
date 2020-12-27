@@ -1,0 +1,49 @@
+{
+    "name": "@devserver/replace-import",
+    "type": "module",
+    "version": "0.4.0",
+    "description": "utilities for the replacement of imports in js files",
+    "main": "./replace-import.cjs",
+    "module": "./src/replace-import.js",
+    "typings": "./types.d.ts",
+    "exports": {
+        ".": {
+            "import": "./src/replace-import.js",
+            "require": "./replace-import.cjs"
+        },
+        "./export-map": {
+            "import": "./src/export-map.js",
+            "require": "./export-map.cjs"
+        },
+        "./resolve": {
+            "import": "./src/resolve.js",
+            "require": "./resolve.cjs"
+        }
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "dev": "rollup -c -w",
+        "prepare": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/UpperCod/devserver.git"
+    },
+    "author": "UpperCod",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/UpperCod/devserver/issues"
+    },
+    "homepage": "https://github.com/UpperCod/devserver#readme",
+    "dependencies": {
+        "es-module-lexer": "^0.3.26"
+    },
+    "devDependencies": {
+        "@betit/rollup-plugin-rename-extensions": "^0.1.0",
+        "ava": "^3.10.1",
+        "rollup": "^2.21.0"
+    }
+}

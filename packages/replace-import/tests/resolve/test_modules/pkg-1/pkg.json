@@ -1,0 +1,7 @@
+{
+  "exports": {
+    ".": "./lib/index.js",
+    "./lib": "./lib/index.js",
+    "./lib/*": "./lib/*.js"
+  }
+}

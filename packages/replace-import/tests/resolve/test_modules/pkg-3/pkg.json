@@ -1,0 +1,5 @@
+{
+  "exports": {
+    "import": "./lib/index.js"
+  }
+}

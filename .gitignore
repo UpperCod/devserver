@@ -1,5 +1,4 @@
 node_modules
-/packages
-/package-lock.json
-/cli.cjs
-/cli.cjs.map
+package-lock.json
+*.cjs
+*.cjs.map
