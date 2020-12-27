@@ -2,7 +2,7 @@
     "name": "@devserver/cli",
     "description": "Minimalist development server",
     "type": "module",
-    "version": "0.7.1",
+    "version": "0.7.2",
     "scripts": {
         "example:dev": "node src/cli.js dev example --cdn --ssl",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl",
