@@ -1,3 +1,4 @@
 *
 !/*.cjs
-!/*.cjs.map
+!/*.cjs.map 
+!/src
