@@ -72,7 +72,7 @@ export async function createBuild({
             ? []
             : external
             ? external
-            : await getExternal(root),
+            : await getExternal({ root }),
         plugins,
     });
 
