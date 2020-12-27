@@ -39,5 +39,9 @@
   },
   "bin": {
     "devserver": "./cli.cjs"
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "singleQuote": false
   }
 }
