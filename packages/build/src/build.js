@@ -1,11 +1,11 @@
 import { join } from "path";
 import glob from "fast-glob";
 import { rollup } from "rollup";
-import { terser } from "rollup-plugin-terser";
 import { copyFile } from "fs/promises";
 import { loadHtml } from "./load-html.js";
 import { prepareDir } from "./utils.js";
 import { pluginEmit } from "./plugin-emit.js";
+import { pluginTerser } from "./plugin-terser.js";
 import { pluginResolve } from "./plugin-resolve.js";
 import { getExternal } from "@devserver/external";
 
@@ -61,6 +61,7 @@ export async function createBuild({
     const plugins = [
         pluginResolve({ root, cdn }),
         pluginEmit(assetsJs, assets),
+        pluginTerser({ sourcemap }),
     ];
 
     if (minify) plugins.push(terser());
@@ -88,6 +89,6 @@ export async function createBuild({
         dir,
         format: "esm",
         sourcemap,
-        chunkFileNames: `chunks/[name]-[hash].js`,
+        chunkFileNames: `chunks-[hash].js`,
     });
 }
