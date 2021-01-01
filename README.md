@@ -27,7 +27,7 @@ import { c } from "atomico";
 import html from "atomico/html";
 
 function component() {
-  return html`<host>web app</host>`;
+    return html`<host>web app</host>`;
 }
 
 customElements.define("custom-element", c(component));
