@@ -1,35 +1,20 @@
-import path from "path";
-import { hash } from "@uppercod/hash";
 import { mapHtml } from "@devserver/assets";
-import { readFile, writeFile } from "fs/promises";
-import { prepareDir, pathname } from "./utils.js";
+import { readFile } from "fs/promises";
 /**
- *
+ * Extract assets declared in html attributes only if they use absolute or relative path prefix
+ * @example
+ * ```html
+ * <script type="module" src="./my.js"></script>
+ * <img src="/my.jpg"/>
+ * <custom-element source="../my.jpg"></custom-element>
+ * ```
  * @param {Object} options
  * @param {string} options.file - path of the html file to process
- * @param {string} options.root - source directory for html files
- * @param {string} options.dist - write destination of processed files
- * @param {string} [options.href] - prefix for assets associated with html files
+ * @param {(from:string,to:string)=>string} options.resolve - path of the html file to process
  */
-export async function loadHtml({ file, root, dist, href }) {
-    const assets = {};
-    const dirname = path.dirname(file);
-    const code = await readFile(file, "utf8");
-
-    const html = mapHtml(code, (value, attr) => {
-        const extension = path.extname(value);
-        const file = pathname(
-            "./" + path.join(value[0] == "/" ? root : dirname, value)
-        );
-        const id = `${hash(file)}${extension}`;
-        assets[file] = id;
-        return `${href || ""}/assets/${id}`;
-    });
-
-    const destFile = path.join(dist, file.replace(root, ""));
-
-    await prepareDir(destFile);
-    await writeFile(destFile, html);
-
-    return assets;
-}
+export const loadHtml = async ({ file, resolve }) => ({
+    file,
+    code: mapHtml(await readFile(file, "utf8"), (value) =>
+        resolve(file, value)
+    ),
+});

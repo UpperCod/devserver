@@ -20,7 +20,11 @@ export const packageName = /(@[^\/]+\/[^\/]+|[^\/]+)(?:\/){0,1}(.*)/;
  */
 export async function resolve(
     npm,
-    { moduleFolder = defaultModuleFolder, pkgFileName = "package.json" } = {}
+    {
+        moduleFolder = defaultModuleFolder,
+        pkgFileName = "package.json",
+        defaultExtension = ".js",
+    } = {}
 ) {
     const [, folder, subpathname] = npm.match(packageName);
 
@@ -43,7 +47,7 @@ export async function resolve(
             "index";
     }
     return new URL(
-        join(folder, addDefaultExtension(file, ".js")),
+        join(folder, addDefaultExtension(file, defaultExtension)),
         moduleFolder
     );
 }

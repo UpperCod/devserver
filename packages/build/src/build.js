@@ -1,10 +1,11 @@
-import { join } from "path";
 import glob from "fast-glob";
+import { join, extname, dirname } from "path";
 import { rollup } from "rollup";
-import { copyFile } from "fs/promises";
+import { hash } from "@uppercod/hash";
 import { loadHtml } from "./load-html.js";
-import { prepareDir } from "./utils.js";
 import { pluginEmit } from "./plugin-emit.js";
+import { copyFile, writeFile } from "fs/promises";
+import { prepareDir, pathname } from "./utils.js";
 import { pluginTerser } from "./plugin-terser.js";
 import { pluginResolve } from "./plugin-resolve.js";
 import { getExternal } from "@devserver/external";
@@ -43,11 +44,26 @@ export async function createBuild({
      * @type {{[prop:string]:string}}
      */
     const assets = {};
+    /**
+     * Fcapture assets from an HTML file to be resolved as static assets or js code
+     * @param {string} from - source file that requires the assets
+     * @param {string} to - source file that requires the assets
+     */
+    const resolve = (from, to) => {
+        const extension = extname(to);
 
-    await Promise.all(
-        html.map(async (file) =>
-            Object.assign(assets, await loadHtml({ file, dist, root, href }))
-        )
+        const file = pathname(
+            "./" + join(to == "/" ? root : dirname(from), to)
+        );
+        const id = `${hash(file)}${extension}`;
+
+        assets[file] = id;
+
+        return `${href || ""}/assets/${id}`;
+    };
+
+    const documents = await Promise.all(
+        html.map((file) => loadHtml({ file, resolve }))
     );
 
     const assetsKeys = Object.keys(assets);
@@ -80,15 +96,18 @@ export async function createBuild({
     if (assetsCopy.length) {
         await prepareDir(dir);
     }
-
-    await Promise.all(
-        assetsCopy.map(async (id) => copyFile(id, join(dir, assets[id])))
-    );
-
-    await bundle.write({
-        dir,
-        format: "esm",
-        sourcemap,
-        chunkFileNames: `chunks-[hash].js`,
-    });
+    await Promise.all([
+        ...assetsCopy.map(async (id) => copyFile(id, join(dir, assets[id]))),
+        ...documents.map(async ({ file, code }) => {
+            const destFile = join(dist, file.replace(root, ""));
+            await prepareDir(destFile);
+            return writeFile(destFile, code);
+        }),
+        bundle.write({
+            dir,
+            format: "esm",
+            sourcemap,
+            chunkFileNames: `chunks-[hash].js`,
+        }),
+    ]);
 }
