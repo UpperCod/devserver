@@ -1,14 +1,14 @@
-import sade from "sade";
+import cac from "cac";
 import { createSSL } from "./ssl.js";
 import { createServer } from "./server.js";
 import { createWatch } from "./watch.js";
 import { log } from "./utils.js";
 
-const command = sade("my-cli").version("PKG.VERSION");
+const command = cac("my-cli").version("PKG.VERSION");
 
 command
-    .command("dev <src>")
-    .option("--port", "port for  server", 80)
+    .command("dev <src>", "...")
+    .option("--port [port]", "port for  server")
     .option("--spa", "page to resolve lost requests", "")
     .option("--ssl", "page to resolve lost requests", false)
     .option(
@@ -16,7 +16,7 @@ command
         "Enables the use of CDN avoiding the need to install the PKG",
         false
     )
-    .action(async (base = "./", { port, spa, cdn, ssl }) => {
+    .action(async (base = "./", { port = 80, spa, cdn, ssl }) => {
         const cert = ssl ? await createSSL(`localhost`) : false;
 
         const devServer = await createServer({ port, base, spa, cdn, cert });
@@ -42,14 +42,18 @@ command
 
 command
     .command("build <src> <dest>")
-    .option("--minify", "minify the js code", false)
+    .option("--minify", "minify the js code")
     .option(
         "--href",
         "associates a prefix for the output of assets declared in html files",
         ""
     )
-    .option("--sourcemap", "enable the generation of sourcemap", false)
-    .option("--external", "allows adding external dependencies manually", "")
+    .option("--sourcemap", "enable the generation of sourcemap")
+    .option(
+        "--external [external]",
+        "allows adding external dependencies manually",
+        ""
+    )
     .option(
         "--cdn",
         "Enables the use of CDN avoiding the need to install the PKG",
@@ -63,16 +67,23 @@ command
         ) => {
             const { build } = await import("@devserver/build");
             log(`Build starting from ${src} to ${dest}...`);
-            build({
-                src,
-                dest,
-                minify,
-                href,
-                external: external ? external.split(/ *, */) : false,
-                cdn,
-                sourcemap,
-            });
-            log(`Build completed!`);
+            try {
+                await build({
+                    src,
+                    dest,
+                    minify,
+                    href,
+                    external:
+                        typeof external == "string"
+                            ? external.split(/ *, */)
+                            : false,
+                    cdn,
+                    sourcemap,
+                });
+                log(`Build completed!`);
+            } catch (e) {
+                log(`Build error ` + e);
+            }
         }
     );
 

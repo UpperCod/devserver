@@ -31,6 +31,8 @@ export const pluginJs = ({ external, base, cdn }) => ({
             (ref.asset ? assets : input).push(ref);
         }
 
+        if (!input.length && !assets.length) return;
+
         /**
          * @type {import("rollup").Plugin[]}
          */
