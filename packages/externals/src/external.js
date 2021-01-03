@@ -5,16 +5,19 @@ import { readFile } from "fs/promises";
 /**
  * captures all packages in order to extract
  * external dependencies from them
- * @param {string} root
- * @param {string} [fileName]
+ * @param {Object} [options]
+ * @param {string} [options.base]
+ * @param {string} [options.pkgFileName]
+ * @param {string} [options.cwd]
+ * @returns {Promise<string[]>}
  */
 export async function getExternal({
-    root = "",
+    base = "",
     pkgFileName = "package.json",
     cwd = process.cwd(),
 } = {}) {
     const pkgFiles = await glob(
-        [root + "**/" + pkgFileName, "!node_modules/**", pkgFileName],
+        [base + "**/" + pkgFileName, "!node_modules/**", pkgFileName],
         {
             cwd,
         }

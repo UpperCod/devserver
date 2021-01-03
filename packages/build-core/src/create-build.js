@@ -80,10 +80,12 @@ export async function createBuild({
                  */
                 load: (ref) =>
                     plugins
-                        .filter(({ filter }) => filter(id))
+                        .filter((plugin) => plugin.filter && plugin.filter(id))
                         .reduce(
                             (pipe, plugin) =>
-                                pipe.then(() => plugin.load(ref, context)),
+                                plugin.load
+                                    ? pipe.then(() => plugin.load(ref, context))
+                                    : pipe,
                             Promise.resolve()
                         ),
             });
@@ -174,6 +176,7 @@ export async function createBuild({
  * @property {()=>Promise<string>} read
  * @property {(to:string)=>string} resolve
  * @property {Promise<any>} [task]
+ * @property {any} [map]
  */
 
 /**
@@ -211,19 +214,20 @@ export async function createBuild({
  * @callback Load
  * @param {Ref} ref
  * @param {Build} build
- * @returns {Promise<any>}
+ * @returns {any}
  */
 
 /**
  * @callback Loaded
  * @param {Output} file
  * @param {Build} build
- * @returns {Promise<any>}
+ * @returns {any}
  */
 
 /**
  * @typedef {Object} Plugin
- * @property {Filter} filter
- * @property {Load} load
+ * @property {Filter} [filter]
+ * @property {Load} [load]
  * @property {Loaded} [loaded]
+ * @property {any} [data]
  */

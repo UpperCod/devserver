@@ -1,18 +1,9 @@
 import glob from "fast-glob";
-// import { join, extname, dirname } from "path";
-// import { rollup } from "rollup";
-// import { hash } from "@uppercod/hash";
-// import { loadHtml } from "./load-html.js";
-// import { loadCss } from "./load-css.js";
-// import { pluginEmit } from "./plugin-emit.js";
-// import { copyFile, writeFile } from "fs/promises";
-// import { prepareDir, pathname } from "./core/utils.js";
-// import { pluginTerser } from "./plugin-terser.js";
-// import { pluginResolve } from "./plugin-resolve.js";
-// import { getExternal } from "@devserver/external";
 import { createBuild } from "@devserver/build-core";
 import { pluginHtml } from "@devserver/plugin-html";
 import { pluginCss } from "@devserver/plugin-css";
+import { pluginJs } from "@devserver/plugin-js";
+import { getExternal } from "@devserver/external";
 
 /**
  *
@@ -36,6 +27,8 @@ export async function build({
 }) {
     const base = src.replace(/^([^\*]+)(.*)/, "$1");
 
+    const externalPkgs = await getExternal({ base });
+
     await createBuild({
         input: (await glob(src)).map((file) => "./" + file),
         base,
@@ -52,6 +45,7 @@ export async function build({
                     ref.copy = true;
                 },
             },
+            pluginJs({ external: externalPkgs, base, cdn }),
         ],
     });
     // const [input, html] = (await glob(src)).reduce(

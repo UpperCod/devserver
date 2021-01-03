@@ -17,6 +17,7 @@ export const packageName = /(@[^\/]+\/[^\/]+|[^\/]+)(?:\/){0,1}(.*)/;
  * @param {Object} options
  * @param {string|URL} [options.moduleFolder] - allows to replace the module resolution path
  * @param {string} [options.pkgFileName] - allows replacing the name of the package.json, used for test.
+ * @param {string} [options.defaultExtension] - allows replacing the name of the package.json, used for test.
  */
 export async function resolve(
     npm,

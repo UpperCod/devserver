@@ -3,13 +3,13 @@
     "type": "module",
     "version": "0.0.0",
     "description": "build for @devserver/cli",
-    "main": "./plugin-jsd.cjs",
-    "module": "./src/plugin-jsd.js",
+    "main": "./plugin-js.cjs",
+    "module": "./src/plugin-js.js",
     "typings": "types.d.ts",
     "exports": {
         ".": {
-            "import": "./src/plugin-jsd.js",
-            "require": "./plugin-jsd.cjs"
+            "import": "./src/plugin-js.js",
+            "require": "./plugin-js.cjs"
         }
     },
     "publishConfig": {
@@ -30,8 +30,13 @@
         "url": "https://github.com/UpperCod/devserver/issues"
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
-    "dependencies": {},
+    "dependencies": {
+        "terser": "^5.5.1",
+        "rollup": "^2.21.0",
+        "@devserver/replace-import": "workspace:*"
+    },
     "devDependencies": {
+        "@devserver/build-core": "workspace:*",
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
         "@uppercod/hash": "^1.1.1",
         "ava": "^3.10.1",

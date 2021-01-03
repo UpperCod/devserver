@@ -48,24 +48,32 @@ command
         "associates a prefix for the output of assets declared in html files",
         ""
     )
+    .option("--sourcemap", "enable the generation of sourcemap", false)
     .option("--external", "allows adding external dependencies manually", "")
     .option(
         "--cdn",
         "Enables the use of CDN avoiding the need to install the PKG",
-        false
+        ""
     )
-    .action(async (src = "./", dest = "", { minify, href, external, cdn }) => {
-        const { build } = await import("@devserver/build");
-        log(`Build starting from ${src} to ${dest}...`);
-        build({
-            src,
-            dest,
-            minify,
-            href,
-            external: external ? external.split(/ *, */) : false,
-            cdn,
-        });
-        log(`Build completed!`);
-    });
+    .action(
+        async (
+            src = "./",
+            dest = "",
+            { minify, href, external, cdn, sourcemap }
+        ) => {
+            const { build } = await import("@devserver/build");
+            log(`Build starting from ${src} to ${dest}...`);
+            build({
+                src,
+                dest,
+                minify,
+                href,
+                external: external ? external.split(/ *, */) : false,
+                cdn,
+                sourcemap,
+            });
+            log(`Build completed!`);
+        }
+    );
 
 command.parse(process.argv);
