@@ -43,12 +43,11 @@ export const pluginJs = ({ external, base, cdn }) => ({
             plugins,
         });
 
-        const build = await bundle.generate({
-            dir: "",
+        await bundle.write({
+            dir: options.dest,
             format: "esm",
             sourcemap: options.sourcemap,
+            chunkFileNames: `chunks/[hash].js`,
         });
-
-        console.log(options);
     },
 });
