@@ -1,7 +1,7 @@
-import { join } from "path";
 import { rollup } from "rollup";
 import { pluginChunk } from "./plugin-chunk.js";
 import { pluginResolve } from "./plugin-resolve.js";
+import { pluginTerser } from "./plugin-terser.js";
 /**
  * @param {Object} options
  * @param {string[]} options.external
@@ -35,6 +35,10 @@ export const pluginJs = ({ external, base, cdn }) => ({
          * @type {import("rollup").Plugin[]}
          */
         const plugins = [pluginChunk(assets), pluginResolve({ base, cdn })];
+
+        if (options.minify) {
+            plugins.push(pluginTerser({ sourcemap: options.sourcemap }));
+        }
 
         const bundle = await rollup({
             input: input.map((ref) => ref.id),
