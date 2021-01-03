@@ -1,4 +1,6 @@
+@import "./vars.css";
+
 body {
-  margin: 0px;
-  background: var(--bg);
+    margin: 0px;
+    background-color: var(--bg);
 }

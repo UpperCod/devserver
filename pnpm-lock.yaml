@@ -31,48 +31,46 @@ importers:
       rollup: ^2.35.1
       rollup-plugin-terser: ^7.0.2
       sade: ^1.7.4
-  packages/assets:
-    devDependencies:
-      '@betit/rollup-plugin-rename-extensions': 0.1.0
-      ava: 3.14.0
-      builtin-modules: 3.2.0
-      rollup: 2.35.1
-    specifiers:
-      '@betit/rollup-plugin-rename-extensions': ^0.1.0
-      ava: ^3.10.1
-      builtin-modules: ^3.1.0
-      rollup: ^2.21.0
   packages/build:
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/assets': 'link:../assets'
-      '@devserver/external': 'link:../externals'
-      '@devserver/replace-import': 'link:../replace-import'
+      '@devserver/build-core': 'link:../build-core'
+      '@devserver/plugin-css': 'link:../plugin-css'
+      '@devserver/plugin-html': 'link:../plugin-html'
+      '@devserver/plugin-js': 'link:../plugin-js'
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.35.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.35.1
-      '@uppercod/hash': 1.1.1
-      atomico: 1.9.1
       ava: 3.14.0
       builtin-modules: 3.2.0
       fast-glob: 3.2.4
       rollup: 2.35.1
       rollup-plugin-terser: 7.0.2_rollup@2.35.1
-      terser: 5.5.1
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
-      '@devserver/assets': 'workspace:*'
-      '@devserver/external': 'workspace:*'
-      '@devserver/replace-import': 'workspace:*'
+      '@devserver/build-core': 'workspace:*'
+      '@devserver/plugin-css': 'workspace:*'
+      '@devserver/plugin-html': 'workspace:*'
+      '@devserver/plugin-js': 'workspace:*'
       '@rollup/plugin-commonjs': ^17.0.0
       '@rollup/plugin-node-resolve': 9.0.0
-      '@uppercod/hash': ^1.1.1
-      atomico: ^1.9.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
       fast-glob: ^3.2.4
       rollup: ^2.21.0
       rollup-plugin-terser: ^7.0.2
-      terser: ^5.5.1
+  packages/build-core:
+    devDependencies:
+      '@betit/rollup-plugin-rename-extensions': 0.1.0
+      '@uppercod/hash': 1.1.1
+      ava: 3.14.0
+      builtin-modules: 3.2.0
+      rollup: 2.35.1
+    specifiers:
+      '@betit/rollup-plugin-rename-extensions': ^0.1.0
+      '@uppercod/hash': ^1.1.1
+      ava: ^3.10.1
+      builtin-modules: ^3.1.0
+      rollup: ^2.21.0
   packages/externals:
     dependencies:
       fast-glob: 3.2.4
@@ -86,6 +84,47 @@ importers:
       ava: ^3.10.1
       builtin-modules: ^3.1.0
       fast-glob: ^3.2.4
+      rollup: ^2.21.0
+  packages/plugin-css:
+    devDependencies:
+      '@betit/rollup-plugin-rename-extensions': 0.1.0
+      '@uppercod/hash': 1.1.1
+      ava: 3.14.0
+      builtin-modules: 3.2.0
+      rollup: 2.35.1
+    specifiers:
+      '@betit/rollup-plugin-rename-extensions': ^0.1.0
+      '@uppercod/hash': ^1.1.1
+      ava: ^3.10.1
+      builtin-modules: ^3.1.0
+      rollup: ^2.21.0
+  packages/plugin-html:
+    devDependencies:
+      '@betit/rollup-plugin-rename-extensions': 0.1.0
+      '@devserver/build-core': 'link:../build-core'
+      '@uppercod/hash': 1.1.1
+      ava: 3.14.0
+      builtin-modules: 3.2.0
+      rollup: 2.35.1
+    specifiers:
+      '@betit/rollup-plugin-rename-extensions': ^0.1.0
+      '@devserver/build-core': 'workspace:*'
+      '@uppercod/hash': ^1.1.1
+      ava: ^3.10.1
+      builtin-modules: ^3.1.0
+      rollup: ^2.21.0
+  packages/plugin-js:
+    devDependencies:
+      '@betit/rollup-plugin-rename-extensions': 0.1.0
+      '@uppercod/hash': 1.1.1
+      ava: 3.14.0
+      builtin-modules: 3.2.0
+      rollup: 2.35.1
+    specifiers:
+      '@betit/rollup-plugin-rename-extensions': ^0.1.0
+      '@uppercod/hash': ^1.1.1
+      ava: ^3.10.1
+      builtin-modules: ^3.1.0
       rollup: ^2.21.0
   packages/replace-import:
     dependencies:

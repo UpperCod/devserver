@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "checkJs": true,
+        "resolveJsonModule": true,
+        "baseUrl":"./",
+        "paths": {
+            "@devserver/*": ["packages/*/src"]
+        },
+    },
+    "include": [
+        "packages/**/*",
+    ]
+}
