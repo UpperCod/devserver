@@ -62,10 +62,11 @@ npm devserver dev site
 
 ### Options
 
-| flag    | descripcion                              |
-| ------- | ---------------------------------------- |
-| `--cdn` | NPM dependencies are resolved from a CDN |
-| `--ssl` | enable the use of http2 + ssl            |
+| flag    | descripcion                                              |
+| ------- | -------------------------------------------------------- |
+| `--cdn` | NPM dependencies are resolved from a CDN                 |
+| `--ssl` | enable the use of http2 + ssl                            |
+| `--spa` | allows associating an html file to solve the lost routes |
 
 ## Build mode
 
@@ -80,11 +81,9 @@ The export is selective based on expressions, always keep in the expression an o
 
 ### Options
 
-| flag       | descripcion                                  |
-| ---------- | -------------------------------------------- |
-| `--href`   | Add a path prefix for assets in an HTML file |
-| `--minify` | minify the js code                           |
-
-## Module import rule.
-
-Local imports must associate with the extension as [Deno](https://github.com/denoland/deno).
+| flag          | descripcion                                                           |
+| ------------- | --------------------------------------------------------------------- |
+| `--href`      | Add a path prefix for assets in an HTML file                          |
+| `--minify`    | Minify JS and CSS code                                                |
+| `--sourcemap` | Enable sourcemap generation for JS files                              |
+| `--external`  | EnIt allows declaring files that should not be considered as external |

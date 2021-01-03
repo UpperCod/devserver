@@ -6,7 +6,7 @@
     "scripts": {
         "example:dev": "node src/cli.js dev example --cdn --ssl",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl",
-        "example:build": "node src/cli.js build example/*.html public --sourcemap",
+        "example:build": "node src/cli.js build example/*.html public --sourcemap --minify",
         "test": "ava",
         "prepare": "pnpm run build -r && pnpm run test"
     },
