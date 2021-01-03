@@ -14,7 +14,8 @@ import { readFile } from "fs/promises";
  */
 export const loadHtml = async ({ file, resolve }) => ({
     file,
-    code: mapHtml(await readFile(file, "utf8"), (value) =>
-        resolve(file, value)
+    code: mapHtml(
+        await readFile(file, "utf8"),
+        (value) => resolve(file, value)[1]
     ),
 });

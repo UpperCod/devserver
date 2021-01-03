@@ -3,11 +3,11 @@ import builtins from "builtin-modules";
 import pkg from "./package.json";
 
 export default {
-    input: ["./src/assets.js"],
+    input: ["./src/plugin-js.js"],
     output: {
         dir: "./",
         format: "cjs",
-        sourcemap: true,
+        sourcemap: false,
     },
     external: Object.keys(pkg.dependencies || {}).concat(builtins),
     plugins: [

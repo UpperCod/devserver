@@ -1,15 +1,15 @@
 {
-    "name": "@devserver/assets",
+    "name": "@devserver/plugin-css",
     "type": "module",
     "version": "0.0.0",
     "description": "build for @devserver/cli",
-    "main": "./assets.cjs",
-    "module": "./src/assets.js",
+    "main": "./plugin-css.cjs",
+    "module": "./src/plugin-css.js",
     "typings": "types.d.ts",
     "exports": {
         ".": {
-            "import": "./src/assets.js",
-            "require": "./assets.cjs"
+            "import": "./src/plugin-css.js",
+            "require": "./plugin-css.cjs"
         }
     },
     "publishConfig": {
@@ -30,8 +30,10 @@
         "url": "https://github.com/UpperCod/devserver/issues"
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
+    "dependencies": {},
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
+        "@uppercod/hash": "^1.1.1",
         "ava": "^3.10.1",
         "builtin-modules": "^3.1.0",
         "rollup": "^2.21.0"
