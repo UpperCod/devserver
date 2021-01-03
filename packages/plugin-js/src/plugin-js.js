@@ -25,7 +25,10 @@ export const pluginJs = ({ external, base, cdn }) => ({
          */
         const assets = [];
 
+        let site;
+
         for (const file in output) {
+            if (file.endsWith(".html")) site = true;
             if (!file.endsWith(".js")) continue;
             const ref = output[file];
             (ref.asset ? assets : input).push(ref);
@@ -45,7 +48,7 @@ export const pluginJs = ({ external, base, cdn }) => ({
         const bundle = await rollup({
             input: input.map((ref) => ref.id),
             preserveEntrySignatures: false,
-            external,
+            external: site ? [] : external,
             plugins,
         });
 

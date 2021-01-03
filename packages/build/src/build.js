@@ -27,7 +27,11 @@ export async function build({
 }) {
     const base = src.replace(/^([^\*]+)(.*)/, "$1");
 
-    const externalPkgs = await getExternal({ base });
+    const externalPkgs = Array.isArray(external)
+        ? external
+        : external
+        ? await getExternal({ base })
+        : [];
 
     await createBuild({
         input: (await glob(src)).map((file) => "./" + file),
