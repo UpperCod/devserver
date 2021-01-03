@@ -31,12 +31,13 @@
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
+        "csso": "^4.2.0",
         "postcss": "^8.2.2",
-        "csso": "^4.2.0"
+        "postcss-csso": "^5.0.0"
     },
     "devDependencies": {
-        "@devserver/build-core": "workspace:*",
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
+        "@devserver/build-core": "workspace:*",
         "@uppercod/hash": "^1.1.1",
         "ava": "^3.10.1",
         "builtin-modules": "^3.1.0",
