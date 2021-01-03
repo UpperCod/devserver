@@ -86,17 +86,22 @@ importers:
       fast-glob: ^3.2.4
       rollup: ^2.21.0
   packages/plugin-css:
+    dependencies:
+      postcss: 8.2.2
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
+      '@devserver/build-core': 'link:../build-core'
       '@uppercod/hash': 1.1.1
       ava: 3.14.0
       builtin-modules: 3.2.0
       rollup: 2.35.1
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
+      '@devserver/build-core': 'workspace:*'
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
+      postcss: ^8.2.2
       rollup: ^2.21.0
   packages/plugin-html:
     devDependencies:
@@ -844,6 +849,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+  /colorette/1.2.1:
+    dev: false
+    resolution:
+      integrity: sha512-puCDz0CzydiSYOrnXpz/PKd69zRrribezjtE9yd4zvytoRc8+RY/KJPvtPFKZS3E3wP6neGyMe0vOTlHO5L3Pw==
   /commander/2.20.3:
     dev: true
     resolution:
@@ -2026,6 +2035,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
+  /nanoid/3.1.20:
+    dev: false
+    engines:
+      node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
+    hasBin: true
+    resolution:
+      integrity: sha512-a1cQNyczgKbLX9jwbS/+d7W8fX/RfgYR7lVWwWOGIPNgK2m0MWvrGF6/m4kk6U3QcFMnZf3RIhL0v2Jgh/0Uxw==
   /negotiator/0.6.2:
     dev: true
     engines:
@@ -2289,6 +2305,16 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-4UGewrYgqDFw9vV6zNV+ADmPAUAfJPKtGvb/VdpQAx25X5f3xXdGdyOEVFwkl8Hl/tl7+xbeHqSEM+D5/TirUg==
+  /postcss/8.2.2:
+    dependencies:
+      colorette: 1.2.1
+      nanoid: 3.1.20
+      source-map: 0.6.1
+    dev: false
+    engines:
+      node: ^10 || ^12 || >=14
+    resolution:
+      integrity: sha512-HM1NDNWLgglJPQQMNwvLxgH2KcrKZklKLi/xXYIOaqQB57p/pDWEJNS83PVICYsn1Dg/9C26TiejNr422/ePaQ==
   /prepend-http/2.0.0:
     dev: true
     engines:
@@ -2644,7 +2670,6 @@ packages:
     resolution:
       integrity: sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
   /source-map/0.6.1:
-    dev: true
     engines:
       node: '>=0.10.0'
     resolution:

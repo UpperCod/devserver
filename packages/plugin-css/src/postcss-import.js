@@ -1,37 +1,26 @@
-import postcss from "postcss";
-import { readFile } from "fs/promises";
-
-const imported = {};
-
-export async function loadCss({ file, dest, resolve }) {
-    const { css } = postcss([plugin({ resolve })]).process(
-        await readFile(file, "utf8"),
-        { from: file }
-    );
-    return [file, css];
-}
-
 /**
- * @param {Object} options
- * @param {(from:string,to:string)=>string}  options.resolve
+ * @param {(file:string)=>string} load
  * @returns {import("postcss").Plugin}
  */
-const plugin = ({ resolve }) => ({
+export const postcssImport = (load) => ({
     postcssPlugin: "postcss-import",
     Once(root, { AtRule }) {
-        const from = root.source.input.file;
-        root.walkAtRules("import", async (atRule) => {
+        root.walkAtRules("import", (atRule) => {
             const [file, media] = importParts(atRule.params);
-            const [src, dest] = resolve(from, file);
+            const src = load(file);
             const nextAtRule = new AtRule({
                 name: "import",
-                params: `url(${dest}) ${media}`,
+                params: `url("${src}") ${media}`,
             });
             atRule.replaceWith(nextAtRule);
         });
     },
 });
 
+/**
+ *
+ * @param {string} value
+ */
 const importParts = (value) => {
     let test;
     let quote;

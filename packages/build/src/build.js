@@ -12,6 +12,7 @@ import glob from "fast-glob";
 // import { getExternal } from "@devserver/external";
 import { createBuild } from "@devserver/build-core";
 import { pluginHtml } from "@devserver/plugin-html";
+import { pluginCss } from "@devserver/plugin-css";
 
 /**
  *
@@ -40,7 +41,18 @@ export async function build({
         base,
         dest,
         href,
-        plugins: [pluginHtml()],
+        sourcemap,
+        minify,
+        plugins: [
+            pluginHtml(),
+            pluginCss(),
+            {
+                filter: (file) => !/\.(js|css)$/.test(file),
+                async load(ref) {
+                    ref.copy = true;
+                },
+            },
+        ],
     });
     // const [input, html] = (await glob(src)).reduce(
     //     (list, file) => {

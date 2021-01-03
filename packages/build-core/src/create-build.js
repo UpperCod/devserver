@@ -7,7 +7,15 @@ import { prepareDir, pathname } from "./utils.js";
  *
  * @param {Options} options
  */
-export async function createBuild({ input, base, dest, href, plugins }) {
+export async function createBuild({
+    input,
+    base,
+    dest,
+    href,
+    minify,
+    plugins,
+    sourcemap,
+}) {
     /**
      * Stores files to be written
      * @type {Output}
@@ -54,7 +62,7 @@ export async function createBuild({ input, base, dest, href, plugins }) {
      * @type {Build}
      */
     const context = {
-        options: { base, dest, href },
+        options: { base, dest, href, minify, sourcemap },
         resolve(from, to) {
             return (
                 "./" +
@@ -140,6 +148,8 @@ export async function createBuild({ input, base, dest, href, plugins }) {
  * @property {string} base
  * @property {string} href
  * @property {string} dest
+ * @property {boolean} [minify]
+ * @property {boolean} [sourcemap]
  * @property {Plugin[]} plugins
  */
 
@@ -175,8 +185,17 @@ export async function createBuild({ input, base, dest, href, plugins }) {
  */
 
 /**
+ * @typedef {Object} BuildOptions
+ * @property {string} href
+ * @property {string} base
+ * @property {string} dest
+ * @property {boolean} [minify]
+ * @property {boolean} [sourcemap]
+ */
+
+/**
  * @typedef {Object} Build
- * @property {{href:string,base:string,dest:string}} options
+ * @property {BuildOptions} options
  * @property {(id:string,options?:RefOptions)=>Ref} set
  * @property {(id:string,asset?:boolean)=>Ref} load
  * @property {(from:string,to:string)=>string} resolve

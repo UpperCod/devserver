@@ -1,5 +1,3 @@
-import { Options, Output } from "./src/create-build.js";
+import { Plugin } from "@devserver/build-core";
 
-export { Plugin } from "./src/create-build.js";
-
-export function createBuild(options: Options): Promise<Output>;
+export function pluginCss(): Plugin;
