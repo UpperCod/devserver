@@ -31,7 +31,6 @@
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
-        "csso": "^4.2.0",
         "postcss": "^8.2.2",
         "postcss-csso": "^5.0.0"
     },
