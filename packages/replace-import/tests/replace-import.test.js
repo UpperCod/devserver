@@ -1,5 +1,5 @@
 import test from "ava";
-import { replaceImport } from "../src/replace-import.js";
+import { replaceImport, Token } from "../src/replace-import.js";
 
 test("resolve-id", async (t) => {
     const code = `
@@ -10,17 +10,15 @@ test("resolve-id", async (t) => {
         import * from "d1";
         import * from "dependency";
     `;
-    const nextCode = await replaceImport({
-        code,
-        resolve: (dep) => {
-            switch (dep) {
-                case "dep-1":
-                    return "d1";
-                case "dep-2":
-                    return "dependency";
-            }
-        },
+    const nextCode = await replaceImport(code, (dep) => {
+        if (dep.src == "dep-1") {
+            dep.src = "d1";
+        }
+        if (dep.src == "dep-2") {
+            dep.src = "dependency";
+        }
+        return dep;
     });
-
-    t.is(nextCode, codeExpect);
+    console.log(nextCode + "");
+    t.is(nextCode + "", codeExpect);
 });

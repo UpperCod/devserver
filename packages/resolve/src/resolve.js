@@ -1,7 +1,7 @@
 import { URL } from "url";
 import { join } from "path";
 import { readFile } from "fs/promises";
-import { exportMap } from "./export-map.js";
+import { packageExports } from "@devserver/package-exports";
 import { cache, addDefaultExtension } from "./utils.js";
 
 const defaultModuleFolder = new URL(
@@ -10,7 +10,6 @@ const defaultModuleFolder = new URL(
 );
 
 export const packageName = /(@[^\/]+\/[^\/]+|[^\/]+)(?:\/){0,1}(.*)/;
-
 /**
  * Resolve the files of a package
  * @param {string} npm - name of the package to solve
@@ -39,13 +38,8 @@ export async function resolve(
 
     if (!subpathname && pkg.module) {
         file = pkg.module;
-    } else if (typeof pkg.exports == "object") {
-        file =
-            pkg.exports.import ||
-            pkg.exports.default ||
-            exportMap(pkg.exports, subpathname) ||
-            subpathname ||
-            "index";
+    } else if (pkg.exports) {
+        file = packageExports(pkg.exports, subpathname) || "index";
     }
     return new URL(
         join(folder, addDefaultExtension(file, defaultExtension)),

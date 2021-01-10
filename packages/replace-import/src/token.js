@@ -1,7 +1,4 @@
-import { init, parse } from "es-module-lexer";
-import MagicString from "magic-string";
-
-class Token {
+export class Token {
     /**
      *
      * @param {string} code
@@ -54,7 +51,7 @@ class Token {
     }
     toString() {
         const [gapType, gapScope, gapFrom] = this.gaps;
-        return (this.type = "dynamic"
+        return (this.type == "dynamic"
             ? [this.quote, this.src, this.quote]
             : [
                   this.type,
@@ -66,48 +63,7 @@ class Token {
                   this.quote,
                   this.src,
                   this.quote,
-              ]).join("");
+              ]
+        ).join("");
     }
 }
-/**
- *
- * @param {*} code
- * @param {(token:Token)=>Token} callback
- */
-async function replaceImport(code, callback) {
-    await init;
-
-    const [imports] = parse(code);
-
-    const tokens = await Promise.all(
-        imports.map((part) => callback(new Token(code, part)))
-    );
-
-    return tokens
-        .filter((token) => token)
-        .filter((token) => token.input != token + "")
-        .reduce((s, token) => {
-            const [start, end] = token.mark;
-            s.overwrite(start, end, token + "");
-            return s;
-        }, new MagicString(code));
-}
-
-replaceImport(
-    `
-import src from "./image.jpg";
-import src from "./image.css";
-import("every");
-`,
-    (md) => {
-        if (md.type != "dynamic" && !/\.(js|jsx|ts|tsx)$/.test(md.src)) {
-            md.toString = () =>
-                `const ${md.scope} = new URL(${
-                    md.quote + md.src + md.quote
-                },import.meta.url)`;
-        }
-        return md;
-    }
-).then((s) => {
-    console.log(s + "");
-});
