@@ -1,5 +1,5 @@
 import path from "path";
-import { resolve } from "@devserver/replace-import/resolve";
+import { resolve } from "@devserver/resolve";
 /**
  * Resolves the path of the resources only if they exist in NPM
  * @param {Object} options

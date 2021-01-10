@@ -4,11 +4,11 @@
     "version": "0.0.0",
     "description": "utilities for the replacement of imports in js files",
     "main": "./package-exports.cjs",
-    "module": "./package-exports.js",
+    "module": "./src/package-exports.js",
     "typings": "./package-exports.d.ts",
     "exports": {
         ".": {
-            "import": "./package-exports.js",
+            "import": "./src/package-exports.js",
             "require": "./package-exports.cjs"
         }
     },

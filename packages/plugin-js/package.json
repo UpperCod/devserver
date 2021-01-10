@@ -31,7 +31,7 @@
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
-        "@devserver/replace-import": "workspace:*",
+        "@devserver/resolve": "workspace:*",
         "rollup": "^2.21.0",
         "terser": "^5.5.1"
     },
