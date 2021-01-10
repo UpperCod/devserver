@@ -3,7 +3,7 @@ import { init, parse } from "es-module-lexer";
  *
  * @param {Object} param
  * @param {string} param.code
- * @param {(value:string)=>Promise<string>} param.resolve
+ * @param {(value:string)=>Promise<string>|string} param.resolve
  */
 export async function replaceImport({ code, resolve }) {
     await init;

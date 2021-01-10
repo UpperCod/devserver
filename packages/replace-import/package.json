@@ -26,6 +26,7 @@
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c -w",
+        "test": "ava",
         "prepare": "npm run build"
     },
     "repository": {
@@ -39,7 +40,8 @@
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
-        "es-module-lexer": "^0.3.26"
+        "es-module-lexer": "^0.3.26",
+        "magic-string": "^0.25.7"
     },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
