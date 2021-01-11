@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import { createServer as serverHttp } from "http";
 import { createSecureServer as serverHttp2 } from "http2";
 import { replaceImport } from "@devserver/replace-import";
-import { resolve, packageName } from "@devserver/replace-import/resolve";
+import { resolve, packageName } from "@devserver/resolve";
 import { routes } from "./routes.js";
 import {
     setCache,
@@ -14,7 +14,7 @@ import {
     setKeepAlive,
     setContentType,
 } from "./responses.js";
-import { pathname, addDefaultIndex } from "./utils.js";
+import { pathname, addDefaultIndex, cache } from "./utils.js";
 
 let responses = [];
 
@@ -32,8 +32,9 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
      * @param {import("@devserver/replace-import").Token} value
      */
     const localResolve = (value) => {
-        if (!/^(\.|\/|http(s){0,1}\:\/\/)/.test(value)) {
-            value.src = cdn ? `https://jspm.dev/${value}` : `/npm/${value}`;
+        const { src } = value;
+        if (!/^(\.|\/|http(s){0,1}\:\/\/)/.test(src)) {
+            value.src = cdn ? `https://jspm.dev/${src}` : `/npm/${src}`;
         }
         return value;
     };
@@ -79,9 +80,10 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
                                 const file = await resolve(pkg);
                                 setContentType(res, file.href);
                                 if (file.href.endsWith(".js")) {
-                                    const code = await replaceImport(
+                                    const code = await cache(
                                         await readFile(file, "utf8"),
-                                        localResolve
+                                        (code) =>
+                                            replaceImport(code, localResolve)
                                     );
 
                                     res.end(code + "");
@@ -98,9 +100,9 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
                             setNoCache(res);
                             setContentType(res, file);
                             if (file.endsWith(".js")) {
-                                const code = await replaceImport(
+                                const code = await cache(
                                     await readFile(file, "utf8"),
-                                    localResolve
+                                    (code) => replaceImport(code, localResolve)
                                 );
 
                                 res.end(code + "");
@@ -124,6 +126,7 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
                     src
                 );
             } catch (e) {
+                console.log(e);
                 res.statusCode = 404;
                 res.end("");
             }

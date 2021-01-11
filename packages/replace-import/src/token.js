@@ -7,63 +7,31 @@ export class Token {
     constructor(code, part) {
         this.src = code.slice(part.s, part.e);
         this.input = code.slice(part.ss, part.se);
-        this.parse(this.input);
-        this.mark =
-            this.type == "dynamic" ? [part.s, part.e] : [part.ss, part.se];
+        this.parse(this.input || this.src);
+        this.mark = this.type ? [part.ss, part.se] : [part.s, part.e];
     }
     /**
      *  @param {string} input
      */
     parse(input) {
-        if (this.input) {
-            let [
-                ,
-                type,
-                gapType,
-                scope,
-                gapScope,
-                from,
-                gapFrom,
-                quote,
-            ] = input.match(/^(import|export)(\s*)(.+)(\s*)(from)(\s*)(.)/s);
-
-            const optsGapScope = scope.match(/(.+)(\s+)$/s);
-
-            if (optsGapScope) {
-                [, scope, gapScope] = optsGapScope;
-            }
-            this.type = type;
-            this.scope = scope;
-            this.from = from;
-            this.quote = quote;
-            this.gaps = [gapType, gapScope, gapFrom];
-        } else {
-            this.type = "dynamic";
-            this.gaps = [];
-            this.input = this.src;
-            if (/^('|")/.test(this.src)) {
-                this.quote = this.src[0];
-                this.src = this.src.slice(1, this.src.length - 1);
-            } else {
-                this.quote = "";
-            }
+        const [, type, scope = "", quote = ""] = input.match(
+            /(\w+)\s*(?:(.+)\s*from){0,1}\s*("|')/
+        );
+        this.scope = scope.trim();
+        this.quote = quote;
+        this.type = type == "import" || type == "export" ? type : "";
+        if (!this.type) {
+            this.src =
+                this.src[0] == this.quote
+                    ? this.src.slice(1, this.src.length - 1)
+                    : this.src;
         }
     }
     toString() {
-        const [gapType, gapScope, gapFrom] = this.gaps;
-        return (this.type == "dynamic"
-            ? [this.quote, this.src, this.quote]
-            : [
-                  this.type,
-                  gapType,
-                  this.scope,
-                  gapScope,
-                  this.from,
-                  gapFrom,
-                  this.quote,
-                  this.src,
-                  this.quote,
-              ]
-        ).join("");
+        const { type, scope, src, quote } = this;
+        return (
+            (type ? type + " " + (scope ? scope + " from " : "") : "") +
+            (quote + src + quote)
+        );
     }
 }
