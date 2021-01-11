@@ -15,7 +15,7 @@ export const pluginJs = ({ external, base, cdn }) => ({
         if (src.endsWith(".html")) this.data.push(src);
         return false;
     },
-    async loaded(output, { options }) {
+    async loaded(output, { options, load }) {
         /**
          * @type {import("@devserver/build-core").Ref[]}
          */
@@ -39,7 +39,10 @@ export const pluginJs = ({ external, base, cdn }) => ({
         /**
          * @type {import("rollup").Plugin[]}
          */
-        const plugins = [pluginChunk(assets), pluginResolve({ base, cdn })];
+        const plugins = [
+            pluginChunk(assets),
+            pluginResolve({ base, cdn, load }),
+        ];
 
         if (options.minify) {
             plugins.push(pluginTerser({ sourcemap: options.sourcemap }));

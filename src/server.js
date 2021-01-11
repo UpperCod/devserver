@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join, extname } from "path";
 import { readFile } from "fs/promises";
 import { createServer as serverHttp } from "http";
 import { createSecureServer as serverHttp2 } from "http2";
@@ -32,8 +32,14 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
      * @param {import("@devserver/replace-import").Token} value
      */
     const localResolve = (value) => {
-        const { src } = value;
-        if (!/^(\.|\/|http(s){0,1}\:\/\/)/.test(src)) {
+        const { src, scope, quote } = value;
+        const ext = extname(src);
+        if (/^\.|\//.test(src) && ext && ext != ".js") {
+            value.toString = () =>
+                `const ${scope} = new URL(${
+                    quote + src + quote
+                }, import.meta.url)`;
+        } else if (!/^(\.|\/|http(s){0,1}\:\/\/)/.test(src)) {
             value.src = cdn ? `https://jspm.dev/${src}` : `/npm/${src}`;
         }
         return value;

@@ -5,7 +5,7 @@
     "description": "build for @devserver/cli",
     "main": "./create-build.cjs",
     "module": "./src/create-build.js",
-    "typings": "types.d.ts",
+    "typings": "./create-build.d.ts",
     "exports": {
         ".": {
             "import": "./src/create-build.js",

@@ -1,3 +1,10 @@
 :root {
-  --bg: tomato;
+    --bg: tomato;
+}
+
+:host {
+    display: block;
+    width: 100px;
+    height: 200px;
+    background: teal;
 }

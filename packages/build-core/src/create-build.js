@@ -33,10 +33,10 @@ export async function createBuild({
      * @returns {RefLink}
      */
     const createLink = (id, asset) => {
-        const dest = asset
-            ? "assets/" + hash(id) + path.extname(id)
-            : id.replace(regBase, "");
+        const name = hash(id) + path.extname(id);
+        const dest = asset ? "assets/" + name : id.replace(regBase, "");
         return {
+            name,
             href: pathname([href, dest].join("/")),
             dest,
         };
@@ -166,6 +166,7 @@ export async function createBuild({
  * @typedef {Object} RefLink
  * @property {string} href
  * @property {string} dest
+ * @property {string} name
  */
 
 /**
