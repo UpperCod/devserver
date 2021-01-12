@@ -1,4 +1,6 @@
 import pkg from "./package.json";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import renameExtensions from "@betit/rollup-plugin-rename-extensions";
 
 export default {
@@ -10,6 +12,8 @@ export default {
         sourcemap: true,
     },
     plugins: [
+        resolve(),
+        commonjs(),
         renameExtensions({
             include: ["**/*.js"],
             mappings: {
