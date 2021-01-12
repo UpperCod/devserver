@@ -1,15 +1,15 @@
 {
-    "name": "@devserver/replace-import",
+    "name": "@devserver/resolve",
     "type": "module",
-    "version": "0.6.0",
+    "version": "0.0.0",
     "description": "utilities for the replacement of imports in js files",
-    "main": "./replace-import.cjs",
-    "module": "./src/replace-import.js",
-    "typings": "./replace-import.d.ts",
+    "main": "./resolve.cjs",
+    "module": "./src/resolve.js",
+    "typings": "./resolve.d.ts",
     "exports": {
         ".": {
-            "import": "./src/replace-import.js",
-            "require": "./replace-import.cjs"
+            "import": "./src/resolve.js",
+            "require": "./resolve.cjs"
         }
     },
     "publishConfig": {
@@ -32,8 +32,7 @@
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
-        "es-module-lexer": "^0.3.26",
-        "magic-string": "^0.25.7"
+        "@devserver/package-exports": "workspace:*"
     },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",

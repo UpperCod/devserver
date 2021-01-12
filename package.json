@@ -7,7 +7,7 @@
         "example:dev": "node src/cli.js dev example --cdn --ssl --port 8080",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080",
         "example:build:cjs": "node ./cli.cjs build site/**/*.html public",
-        "example:build": "node src/cli.js build site/**/*.html public  --minify --external",
+        "example:build": "node src/cli.js build example/**/*.html public  --external --sourcemap",
         "test": "ava",
         "build": "rollup -c",
         "prepare": "pnpm run build && pnpm run test"
@@ -22,7 +22,8 @@
     },
     "license": "ISC",
     "dependencies": {
-        "@devserver/replace-import": "workspace:*"
+        "@devserver/replace-import": "workspace:*",
+        "@devserver/resolve": "workspace:*"
     },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",

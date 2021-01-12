@@ -1,15 +1,15 @@
 {
-    "name": "@devserver/replace-import",
+    "name": "@devserver/package-exports",
     "type": "module",
-    "version": "0.6.0",
+    "version": "0.0.0",
     "description": "utilities for the replacement of imports in js files",
-    "main": "./replace-import.cjs",
-    "module": "./src/replace-import.js",
-    "typings": "./replace-import.d.ts",
+    "main": "./package-exports.cjs",
+    "module": "./src/package-exports.js",
+    "typings": "./package-exports.d.ts",
     "exports": {
         ".": {
-            "import": "./src/replace-import.js",
-            "require": "./replace-import.cjs"
+            "import": "./src/package-exports.js",
+            "require": "./package-exports.cjs"
         }
     },
     "publishConfig": {

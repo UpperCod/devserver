@@ -15,7 +15,7 @@ export const pluginJs = ({ external, base, cdn }) => ({
         if (src.endsWith(".html")) this.data.push(src);
         return false;
     },
-    async loaded(output, { options }) {
+    async loaded(output, { options, load, set }) {
         /**
          * @type {import("@devserver/build-core").Ref[]}
          */
@@ -39,7 +39,10 @@ export const pluginJs = ({ external, base, cdn }) => ({
         /**
          * @type {import("rollup").Plugin[]}
          */
-        const plugins = [pluginChunk(assets), pluginResolve({ base, cdn })];
+        const plugins = [
+            pluginChunk(assets),
+            pluginResolve({ base, cdn, load }),
+        ];
 
         if (options.minify) {
             plugins.push(pluginTerser({ sourcemap: options.sourcemap }));
@@ -52,11 +55,21 @@ export const pluginJs = ({ external, base, cdn }) => ({
             plugins,
         });
 
-        await bundle.write({
+        const { output: outputRollup } = await bundle.generate({
             dir: options.dest,
             format: "esm",
             sourcemap: options.sourcemap,
             chunkFileNames: `chunks/[hash].js`,
         });
+
+        for (const chunk of outputRollup) {
+            if (chunk.type == "asset") continue;
+            const ref =
+                assets.find(({ link }) => link.dest == chunk.fileName) ||
+                set(chunk.fileName);
+            ref.code = chunk.code;
+            ref.map = chunk.map;
+            ref.asset = true;
+        }
     },
 });

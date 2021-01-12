@@ -1,3 +1,12 @@
+const CACHE = {};
+/**
+ * @template T
+ * @param {string} code
+ * @param {(code:string)=>T} callback
+ * @returns {T}
+ */
+export const cache = (code, callback) =>
+    (CACHE[code] = CACHE[code] || callback(code));
 /**
  *
  * @param {string} value

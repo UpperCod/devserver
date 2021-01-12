@@ -1,6 +1,6 @@
 import test from "ava";
 import { URL } from "url";
-import { resolve, packageName } from "../../src/resolve.js";
+import { resolve, packageName } from "../src/resolve.js";
 
 const ModuleFolder = new URL("./test_modules/", import.meta.url);
 

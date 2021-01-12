@@ -2,6 +2,7 @@ importers:
   .:
     dependencies:
       '@devserver/replace-import': 'link:packages/replace-import'
+      '@devserver/resolve': 'link:packages/resolve'
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@devserver/build': 'link:packages/build'
@@ -20,6 +21,7 @@ importers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
       '@devserver/build': 'workspace:*'
       '@devserver/replace-import': 'workspace:*'
+      '@devserver/resolve': 'workspace:*'
       '@rollup/plugin-commonjs': ^17.0.0
       '@rollup/plugin-node-resolve': ^11.0.1
       '@rollup/plugin-replace': ^2.3.4
@@ -89,6 +91,20 @@ importers:
       builtin-modules: ^3.1.0
       fast-glob: ^3.2.4
       rollup: ^2.21.0
+  packages/package-exports:
+    dependencies:
+      es-module-lexer: 0.3.26
+      magic-string: 0.25.7
+    devDependencies:
+      '@betit/rollup-plugin-rename-extensions': 0.1.0
+      ava: 3.14.0
+      rollup: 2.35.1
+    specifiers:
+      '@betit/rollup-plugin-rename-extensions': ^0.1.0
+      ava: ^3.10.1
+      es-module-lexer: ^0.3.26
+      magic-string: ^0.25.7
+      rollup: ^2.21.0
   packages/plugin-css:
     dependencies:
       postcss: 8.2.2
@@ -126,7 +142,7 @@ importers:
       rollup: ^2.21.0
   packages/plugin-js:
     dependencies:
-      '@devserver/replace-import': 'link:../replace-import'
+      '@devserver/resolve': 'link:../resolve'
       rollup: 2.35.1
       terser: 5.5.1
     devDependencies:
@@ -138,7 +154,7 @@ importers:
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
       '@devserver/build-core': 'workspace:*'
-      '@devserver/replace-import': 'workspace:*'
+      '@devserver/resolve': 'workspace:*'
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
@@ -147,6 +163,7 @@ importers:
   packages/replace-import:
     dependencies:
       es-module-lexer: 0.3.26
+      magic-string: 0.25.7
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       ava: 3.14.0
@@ -155,6 +172,19 @@ importers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
       ava: ^3.10.1
       es-module-lexer: ^0.3.26
+      magic-string: ^0.25.7
+      rollup: ^2.21.0
+  packages/resolve:
+    dependencies:
+      '@devserver/package-exports': 'link:../package-exports'
+    devDependencies:
+      '@betit/rollup-plugin-rename-extensions': 0.1.0
+      ava: 3.14.0
+      rollup: 2.35.1
+    specifiers:
+      '@betit/rollup-plugin-rename-extensions': ^0.1.0
+      '@devserver/package-exports': 'workspace:*'
+      ava: ^3.10.1
       rollup: ^2.21.0
 lockfileVersion: 5.2
 packages:
@@ -1908,7 +1938,6 @@ packages:
   /magic-string/0.25.7:
     dependencies:
       sourcemap-codec: 1.4.8
-    dev: true
     resolution:
       integrity: sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==
   /make-dir/3.1.0:
@@ -2721,7 +2750,6 @@ packages:
     resolution:
       integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
   /sourcemap-codec/1.4.8:
-    dev: true
     resolution:
       integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
   /spdx-correct/3.1.1:

@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "esnext",
         "checkJs": true,
-        "resolveJsonModule": true,
         "baseUrl":"./",
         "paths": {
             "@devserver/*": ["packages/*/src"]
@@ -9,5 +11,8 @@
     },
     "include": [
         "packages/**/*",
+    ],
+    "exclude": [
+        "**/rollup.config.js"
     ]
 }

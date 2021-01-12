@@ -1,1 +1,1 @@
-export { replaceImport } from "./src/replace-import";
+export { replaceImport, Token } from "./src/replace-import.js";

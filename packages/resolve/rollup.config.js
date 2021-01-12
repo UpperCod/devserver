@@ -2,7 +2,7 @@ import pkg from "./package.json";
 import renameExtensions from "@betit/rollup-plugin-rename-extensions";
 
 export default {
-    input: "./src/replace-import.js",
+    input: "src/resolve.js",
     external: Object.keys(pkg.dependencies),
     output: {
         dir: "./",
