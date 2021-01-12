@@ -33,23 +33,25 @@ export async function build({
         ? await getExternal({ base })
         : [];
 
-    await createBuild({
-        input: (await glob(src)).map((file) => "./" + file),
-        base,
-        dest,
-        href,
-        sourcemap,
-        minify,
-        plugins: [
-            pluginHtml(),
-            pluginCss(),
-            {
-                filter: (file) => !/\.(js|css|html)$/.test(file),
-                async load(ref) {
-                    ref.copy = true;
+    return (
+        await createBuild({
+            input: (await glob(src)).map((file) => "./" + file),
+            base,
+            dest,
+            href,
+            sourcemap,
+            minify,
+            plugins: [
+                pluginHtml(),
+                pluginCss(),
+                {
+                    filter: (file) => !/\.(js|css|html)$/.test(file),
+                    async load(ref) {
+                        ref.copy = true;
+                    },
                 },
-            },
-            pluginJs({ external: externalPkgs, base, cdn }),
-        ],
-    });
+                pluginJs({ external: externalPkgs, base, cdn }),
+            ],
+        })
+    ).write();
 }

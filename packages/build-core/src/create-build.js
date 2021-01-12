@@ -6,6 +6,7 @@ import { prepareDir, pathname } from "./utils.js";
 /**
  *
  * @param {Options} options
+ * @returns {Promise<BuildReturn>}
  */
 export async function createBuild({
     input,
@@ -94,7 +95,7 @@ export async function createBuild({
 
             return item;
         },
-        set(id, { copy, asset, load }) {
+        set(id, { copy, asset, load } = {}) {
             if (!output[id]) {
                 output[id] = {
                     id,
@@ -106,7 +107,7 @@ export async function createBuild({
                 };
             }
 
-            if (!output[id].task) {
+            if (!output[id].task && load) {
                 output[id].task = load(output[id]);
             }
 
@@ -129,20 +130,38 @@ export async function createBuild({
 
     await taskCycle();
 
-    await Promise.all([
-        ...Object.keys(output)
-            .map((id) => output[id])
-            .map(async ({ id, copy, code, link }) => {
-                const fileDest = path.join(dest, link.dest);
-                await prepareDir(fileDest);
-                return copy
-                    ? copyFile(id, fileDest)
-                    : code != null && writeFile(fileDest, code, "utf8");
-            }),
-    ]);
-
-    return output;
+    return {
+        output,
+        write: () =>
+            Promise.all([
+                ...Object.keys(output)
+                    .map((id) => output[id])
+                    .map(async ({ id, copy, code, link, map }) => {
+                        const fileDest = path.join(dest, link.dest);
+                        await prepareDir(fileDest);
+                        const task = [
+                            copy
+                                ? copyFile(id, fileDest)
+                                : code != null &&
+                                  writeFile(fileDest, code, "utf8"),
+                        ];
+                        if (map && !/sourceMappingURL=/.test(code)) {
+                            code += `//# sourceMappingURL=${link.href}.map`;
+                            task.push(
+                                writeFile(fileDest + ".map", map + "", "utf8")
+                            );
+                        }
+                        return Promise.all(task);
+                    }),
+            ]),
+    };
 }
+
+/**
+ * @typedef {Object} BuildReturn
+ * @property {Output} output
+ * @property {()=>Promise<any>} write
+ */
 
 /**
  * @typedef {Object} Options
