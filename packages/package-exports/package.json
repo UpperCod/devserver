@@ -1,7 +1,7 @@
 {
     "name": "@devserver/package-exports",
     "type": "module",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description": "utilities for the replacement of imports in js files",
     "main": "./package-exports.cjs",
     "module": "./src/package-exports.js",
@@ -31,10 +31,6 @@
         "url": "https://github.com/UpperCod/devserver/issues"
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
-    "dependencies": {
-        "es-module-lexer": "^0.3.26",
-        "magic-string": "^0.25.7"
-    },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
         "ava": "^3.10.1",
