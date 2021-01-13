@@ -36,6 +36,8 @@ importers:
       rollup: ^2.35.1
       rollup-plugin-terser: ^7.0.2
   packages/build:
+    dependencies:
+      terser: 5.5.1
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@devserver/build-core': 'link:../build-core'
@@ -66,6 +68,7 @@ importers:
       fast-glob: ^3.2.4
       rollup: ^2.21.0
       rollup-plugin-terser: ^7.0.2
+      terser: ^5.5.1
   packages/build-core:
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
@@ -123,8 +126,6 @@ importers:
       postcss-csso: ^5.0.0
       rollup: ^2.21.0
   packages/plugin-html:
-    dependencies:
-      liquidjs: 9.19.0
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@devserver/build-core': 'link:../build-core'
@@ -138,7 +139,6 @@ importers:
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
-      liquidjs: ^9.19.0
       rollup: ^2.21.0
   packages/plugin-js:
     dependencies:
@@ -1861,13 +1861,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
-  /liquidjs/9.19.0:
-    dev: false
-    engines:
-      node: '>=4.8.7'
-    hasBin: true
-    resolution:
-      integrity: sha512-uqyrWIw9oqVi18gBvBZUK9llCdAHh6YMUrwo6IuzDOVimRSE/LqydJYhZv1VeTvMuUZNNK8hqj/lXaKon4e+GA==
   /load-json-file/5.3.0:
     dependencies:
       graceful-fs: 4.2.4

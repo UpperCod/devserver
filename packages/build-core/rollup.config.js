@@ -3,7 +3,7 @@ import builtins from "builtin-modules";
 import pkg from "./package.json";
 
 export default {
-    input: ["./src/create-build.js"],
+    input: ["./src/build.js"],
     output: {
         dir: "./",
         format: "cjs",

@@ -23,7 +23,8 @@
     "license": "ISC",
     "dependencies": {
         "@devserver/replace-import": "workspace:*",
-        "@devserver/resolve": "workspace:*"
+        "@devserver/resolve": "workspace:*",
+        "@devserver/build-core": "workspace:*"
     },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
