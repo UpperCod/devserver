@@ -1,7 +1,7 @@
 {
     "name": "@devserver/build",
     "type": "module",
-    "version": "0.10.1",
+    "version": "0.11.0",
     "description": "build for @devserver/cli",
     "main": "./build.cjs",
     "module": "./src/build.js",
@@ -43,7 +43,6 @@
         "ava": "^3.10.1",
         "builtin-modules": "^3.1.0",
         "fast-glob": "^3.2.4",
-        "rollup": "^2.21.0",
-        "rollup-plugin-terser": "^7.0.2"
+        "rollup": "^2.21.0"
     }
 }

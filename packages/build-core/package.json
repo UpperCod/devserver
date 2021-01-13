@@ -1,15 +1,15 @@
 {
     "name": "@devserver/build-core",
     "type": "module",
-    "version": "0.10.1",
+    "version": "0.11.0",
     "description": "build for @devserver/cli",
-    "main": "./create-build.cjs",
-    "module": "./src/create-build.js",
-    "typings": "./create-build.d.ts",
+    "main": "./build.cjs",
+    "module": "./src/build.js",
+    "typings": "./build.d.ts",
     "exports": {
         ".": {
-            "import": "./src/create-build.js",
-            "require": "./create-build.cjs"
+            "import": "./src/build.js",
+            "require": "./build.cjs"
         }
     },
     "publishConfig": {

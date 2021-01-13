@@ -1,5 +1,5 @@
 import glob from "fast-glob";
-import { createBuild } from "@devserver/build-core";
+import { Build } from "@devserver/build-core";
 import { pluginHtml } from "@devserver/plugin-html";
 import { pluginCss } from "@devserver/plugin-css";
 import { pluginJs } from "@devserver/plugin-js";
@@ -33,25 +33,29 @@ export async function build({
         ? await getExternal({ base })
         : [];
 
-    return (
-        await createBuild({
-            input: (await glob(src)).map((file) => "./" + file),
+    const build = new Build(
+        {
             base,
             dest,
             href,
             sourcemap,
             minify,
-            plugins: [
-                pluginHtml(),
-                pluginCss(),
-                {
-                    filter: (file) => !/\.(js|css|html)$/.test(file),
-                    async load(ref) {
-                        ref.copy = true;
-                    },
+        },
+        [
+            pluginHtml(),
+            pluginCss(),
+            {
+                filter: (file) => !/\.(js|css|html)$/.test(file),
+                async load(ref) {
+                    ref.copy = true;
                 },
-                pluginJs({ external: externalPkgs, base, cdn }),
-            ],
-        })
-    ).write();
+            },
+            pluginJs({ external: externalPkgs, base, cdn }),
+        ]
+    );
+    (await glob(src))
+        .map((file) => "./" + file)
+        .forEach((input) => build.load(input));
+
+    return await build.writeOutput();
 }

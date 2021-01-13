@@ -1,5 +1,4 @@
 import path from "path";
-import { readFile } from "fs/promises";
 import { resolve } from "@devserver/resolve";
 import { replaceImport } from "@devserver/replace-import";
 /**
@@ -12,11 +11,13 @@ import { replaceImport } from "@devserver/replace-import";
  */
 export const pluginResolve = ({ base, cdn, load }) => ({
     name: "plugin-resolve",
-    resolveId(source) {
+    resolveId(source, importer) {
         // ignore dependency if this is already a url
         if (/^http(s){0,1}\:\/\//.test(source))
             return { id: source, external: true };
         // In the opposite case, associate a resolution process
+        if (!importer) return source;
+
         return source[0] == "."
             ? null
             : source[0] == "/"

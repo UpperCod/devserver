@@ -15,7 +15,7 @@ export const pluginJs = ({ external, base, cdn }) => ({
         if (src.endsWith(".html")) this.data.push(src);
         return false;
     },
-    async loaded(output, { options, load, set }) {
+    async loaded({ output, options, load, set }) {
         /**
          * @type {import("@devserver/build-core").Ref[]}
          */
