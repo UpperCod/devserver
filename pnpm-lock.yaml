@@ -36,8 +36,6 @@ importers:
       rollup: ^2.35.1
       rollup-plugin-terser: ^7.0.2
   packages/build:
-    dependencies:
-      terser: 5.5.1
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@devserver/build-core': 'link:../build-core'
@@ -52,7 +50,6 @@ importers:
       builtin-modules: 3.2.0
       fast-glob: 3.2.4
       rollup: 2.35.1
-      rollup-plugin-terser: 7.0.2_rollup@2.35.1
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
       '@devserver/build-core': 'workspace:*'
@@ -67,8 +64,6 @@ importers:
       builtin-modules: ^3.1.0
       fast-glob: ^3.2.4
       rollup: ^2.21.0
-      rollup-plugin-terser: ^7.0.2
-      terser: ^5.5.1
   packages/build-core:
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
