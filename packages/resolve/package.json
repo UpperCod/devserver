@@ -1,7 +1,7 @@
 {
     "name": "@devserver/resolve",
     "type": "module",
-    "version": "0.11.0",
+    "version": "0.11.1",
     "description": "utilities for the replacement of imports in js files",
     "main": "./resolve.cjs",
     "module": "./src/resolve.js",
