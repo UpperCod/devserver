@@ -187,7 +187,7 @@ export class Build {
                         map &&
                         !/sourceMappingURL=/.test(code)
                     ) {
-                        code += `//# sourceMappingURL=${link.href}.map`;
+                        code += `//# sourceMappingURL=${link.name}.map`;
                         task.push(
                             writeFile(fileDest + ".map", map + "", "utf8")
                         );
