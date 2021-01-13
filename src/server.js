@@ -118,11 +118,11 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
                                     "utf8"
                                 ).catch(() => readFile(notFound, "utf8"));
                                 const reload = `
-                <script>{
-                let source = new EventSource('/livereload');
-                source.onmessage = e =>  setTimeout(()=>location.reload(),250);
-                }</script>
-              `;
+                                    <script>{
+                                    let source = new EventSource('/livereload');
+                                    source.onmessage = e =>  setTimeout(()=>location.reload(),250);
+                                    }</script>
+                                `;
                                 res.end(code + reload);
                             } else {
                                 return sendStream(res, file);
