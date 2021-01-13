@@ -1,6 +1,7 @@
 importers:
   .:
     dependencies:
+      '@devserver/build-core': 'link:packages/build-core'
       '@devserver/replace-import': 'link:packages/replace-import'
       '@devserver/resolve': 'link:packages/resolve'
     devDependencies:
@@ -20,6 +21,7 @@ importers:
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
       '@devserver/build': 'workspace:*'
+      '@devserver/build-core': 'workspace:*'
       '@devserver/replace-import': 'workspace:*'
       '@devserver/resolve': 'workspace:*'
       '@rollup/plugin-commonjs': ^17.0.0
@@ -92,9 +94,6 @@ importers:
       fast-glob: ^3.2.4
       rollup: ^2.21.0
   packages/package-exports:
-    dependencies:
-      es-module-lexer: 0.3.26
-      magic-string: 0.25.7
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       ava: 3.14.0
@@ -102,8 +101,6 @@ importers:
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
       ava: ^3.10.1
-      es-module-lexer: ^0.3.26
-      magic-string: ^0.25.7
       rollup: ^2.21.0
   packages/plugin-css:
     dependencies:
@@ -126,6 +123,8 @@ importers:
       postcss-csso: ^5.0.0
       rollup: ^2.21.0
   packages/plugin-html:
+    dependencies:
+      liquidjs: 9.19.0
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@devserver/build-core': 'link:../build-core'
@@ -139,6 +138,7 @@ importers:
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
+      liquidjs: ^9.19.0
       rollup: ^2.21.0
   packages/plugin-js:
     dependencies:
@@ -1191,6 +1191,7 @@ packages:
     resolution:
       integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==
   /es-module-lexer/0.3.26:
+    dev: true
     resolution:
       integrity: sha512-Va0Q/xqtrss45hWzP8CZJwzGSZJjDM5/MJRE3IXXnUCcVLElR9BRaE9F62BopysASyc4nM3uwhSW7FFB9nlWAA==
   /escalade/3.1.1:
@@ -1860,6 +1861,13 @@ packages:
     dev: true
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
+  /liquidjs/9.19.0:
+    dev: false
+    engines:
+      node: '>=4.8.7'
+    hasBin: true
+    resolution:
+      integrity: sha512-uqyrWIw9oqVi18gBvBZUK9llCdAHh6YMUrwo6IuzDOVimRSE/LqydJYhZv1VeTvMuUZNNK8hqj/lXaKon4e+GA==
   /load-json-file/5.3.0:
     dependencies:
       graceful-fs: 4.2.4
@@ -1924,6 +1932,7 @@ packages:
   /magic-string/0.25.7:
     dependencies:
       sourcemap-codec: 1.4.8
+    dev: true
     resolution:
       integrity: sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==
   /make-dir/3.1.0:
@@ -2736,6 +2745,7 @@ packages:
     resolution:
       integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
   /sourcemap-codec/1.4.8:
+    dev: true
     resolution:
       integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
   /spdx-correct/3.1.1:
