@@ -178,17 +178,25 @@ export class Build {
                 .map(async ({ id, copy, code, link, map }) => {
                     const fileDest = path.join(options.dest, link.dest);
                     await prepareDir(fileDest);
-                    const task = [
-                        copy
-                            ? copyFile(id, fileDest)
-                            : code != null && writeFile(fileDest, code, "utf8"),
-                    ];
-                    if (map && !/sourceMappingURL=/.test(code)) {
+                    /**
+                     * @type {Promise<any>[]}
+                     */
+                    const task = [];
+                    if (
+                        options.sourcemap &&
+                        map &&
+                        !/sourceMappingURL=/.test(code)
+                    ) {
                         code += `//# sourceMappingURL=${link.href}.map`;
                         task.push(
                             writeFile(fileDest + ".map", map + "", "utf8")
                         );
                     }
+                    task.push(
+                        copy
+                            ? copyFile(id, fileDest)
+                            : code != null && writeFile(fileDest, code, "utf8")
+                    );
                     return Promise.all(task);
                 }),
         ]);
