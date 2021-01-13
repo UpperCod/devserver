@@ -53,10 +53,9 @@ export async function build({
             pluginJs({ external: externalPkgs, base, cdn }),
         ]
     );
-
     (await glob(src))
         .map((file) => "./" + file)
         .forEach((input) => build.load(input));
 
-    return build.writeOutput();
+    return await build.writeOutput();
 }

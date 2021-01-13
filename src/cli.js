@@ -10,16 +10,24 @@ command
     .command("dev <src>", "...")
     .option("--port [port]", "port for  server")
     .option("--spa", "page to resolve lost requests", "")
-    .option("--ssl", "page to resolve lost requests", false)
+    .option("--debug", "silence errors for failed responses", false)
+    .option("--ssl", "enables the use of SSL and HTTP2", false)
     .option(
         "--cdn",
         "Enables the use of CDN avoiding the need to install the PKG",
         false
     )
-    .action(async (base = "./", { port = 80, spa, cdn, ssl }) => {
+    .action(async (base = "./", { port = 80, spa, cdn, ssl, debug }) => {
         const cert = ssl ? await createSSL(`localhost`) : false;
 
-        const devServer = await createServer({ port, base, spa, cdn, cert });
+        const devServer = await createServer({
+            port,
+            base,
+            spa,
+            cdn,
+            cert,
+            debug,
+        });
 
         log(
             `DEV server running on ${ssl ? "https" : "http"}://localhost:${
@@ -33,8 +41,13 @@ command
 
         createWatch({
             base,
-            listener() {
+            async listener(files) {
+                for (const file in files) {
+                    delete devServer.build.output[file];
+                }
+
                 devServer.reload();
+
                 watchLog();
             },
         });

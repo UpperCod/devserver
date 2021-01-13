@@ -4,9 +4,10 @@ import { href } from "../assets/vars.css";
 import "./component-2.js";
 
 function component() {
-    console.log(import("./dinamic-import.js"));
+    console.log(import("./sub/dinamic-import.js"));
     return html`<host shadowDom>
         <link rel="stylesheet" href=${href} />
+        lorem...ss
     </host>`;
 }
 

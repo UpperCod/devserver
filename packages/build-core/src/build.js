@@ -3,6 +3,8 @@ import { readFile, writeFile, copyFile } from "fs/promises";
 import { hash } from "@uppercod/hash";
 import { pathname, prepareDir } from "./utils.js";
 
+const cwd = process.cwd();
+
 export class Build {
     /**
      * Virtual files stored by the build
@@ -20,6 +22,7 @@ export class Build {
      * @param {string} [options.href] - prefix to add to static file path reference
      * @param {string} [options.base] - base directory, limits the mayor reading files and resolutions
      * @param {string} [options.dest] - prefix to add to static file path reference
+     * @param {string} [options.cwd] - prefix to add to static file path reference
      * @param {boolean} [options.minify] - declare file minification for plugins
      * @param {boolean} [options.sourcemap] - declares the generation of source maps for the files
      * @param {Plugin[]} plugins
@@ -64,9 +67,11 @@ export class Build {
                 return pathname([self.options.href, this.dest].join("/"));
             },
             get dest() {
-                return asset
-                    ? "assets/" + this.name
-                    : this.id.replace(self.regBase, "");
+                return pathname(
+                    asset
+                        ? "assets/" + this.name
+                        : pathname(this.id).replace(self.regBase, "")
+                );
             },
         };
     };
@@ -106,6 +111,7 @@ export class Build {
      * @returns {Ref}
      */
     set = (id, { copy, asset, load } = {}) => {
+        id = path.relative(this.options.cwd || cwd, id);
         if (!this.output[id]) {
             this.output[id] = this.ref(id, {
                 copy,

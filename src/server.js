@@ -1,9 +1,8 @@
-import { join, extname } from "path";
-import { readFile } from "fs/promises";
+import path from "path";
 import { createServer as serverHttp } from "http";
 import { createSecureServer as serverHttp2 } from "http2";
-import { replaceImport } from "@devserver/replace-import";
 import { resolve, packageName } from "@devserver/resolve";
+import { Build } from "@devserver/build-core";
 import { routes } from "./routes.js";
 import {
     setCache,
@@ -14,7 +13,9 @@ import {
     setKeepAlive,
     setContentType,
 } from "./responses.js";
-import { pathname, addDefaultIndex, cache } from "./utils.js";
+import { pathname, addDefaultIndex } from "./utils.js";
+import { pluginJs } from "./plugins/plugin-js.js";
+import { pluginHtml } from "./plugins/plugin-html.js";
 
 let responses = [];
 
@@ -23,27 +24,22 @@ let responses = [];
  * @param {string} base
  * @param {number} port
  * @param {string} spa
+ * @returns {Promise<{port:number,build:Build,reload:()=>void}>}
  */
-export const createServer = ({ base, port, spa, cdn, cert }) => {
+export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
     // File to display for unresolved routes
-    const notFound = join(base, spa || "404.html");
-    /**
-     *
-     * @param {import("@devserver/replace-import").Token} value
-     */
-    const localResolve = (value) => {
-        const { src, scope, quote } = value;
-        const ext = extname(src);
-        if (/^\.|\//.test(src) && ext && ext != ".js") {
-            value.toString = () =>
-                `const ${scope} = new URL(${
-                    quote + src + quote
-                }, import.meta.url)`;
-        } else if (!/^(\.|\/|http(s){0,1}\:\/\/)/.test(src)) {
-            value.src = cdn ? `https://jspm.dev/${src}` : `/npm/${src}`;
-        }
-        return value;
-    };
+    const notFound = path.join(base, spa || "404.html");
+
+    const build = new Build({ base, dest: "" }, [
+        pluginJs({ cdn }),
+        pluginHtml({ notFound }),
+        {
+            filter: (src) => !/.(html|js)$/.test(src),
+            load(ref) {
+                ref.copy = true;
+            },
+        },
+    ]);
 
     return new Promise((ready) => {
         /**
@@ -84,55 +80,47 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
                                 setRedirect(res, npmFolder);
                             } else {
                                 const file = await resolve(pkg);
-                                setContentType(res, file.href);
-                                if (file.href.endsWith(".js")) {
-                                    const code = await cache(
-                                        await readFile(file, "utf8"),
-                                        (code) =>
-                                            replaceImport(code, localResolve)
-                                    );
 
-                                    res.end(code + "");
-                                } else {
+                                const ref = build.load(
+                                    file.href.replace("file:///", "")
+                                );
+
+                                await ref.task;
+
+                                setContentType(res, ref.id);
+
+                                if (ref.copy) {
                                     return sendStream(res, file);
+                                } else {
+                                    res.end(ref.code);
                                 }
                             }
                         },
                         "/[...local]": async ({ local }) => {
-                            const file = join(
+                            const file = path.join(
                                 base,
                                 addDefaultIndex(local, ".html")
                             );
-                            setNoCache(res);
-                            setContentType(res, file);
-                            if (file.endsWith(".js")) {
-                                const code = await cache(
-                                    await readFile(file, "utf8"),
-                                    (code) => replaceImport(code, localResolve)
-                                );
 
-                                res.end(code + "");
-                            } else if (file.endsWith(".html")) {
-                                const code = await readFile(
-                                    file,
-                                    "utf8"
-                                ).catch(() => readFile(notFound, "utf8"));
-                                const reload = `
-                                    <script>{
-                                    let source = new EventSource('/livereload');
-                                    source.onmessage = e =>  setTimeout(()=>location.reload(),250);
-                                    }</script>
-                                `;
-                                res.end(code + reload);
-                            } else {
+                            setNoCache(res);
+
+                            const ref = build.load(file);
+
+                            await ref.task;
+
+                            setContentType(res, ref.id);
+
+                            if (ref.copy) {
                                 return sendStream(res, file);
+                            } else {
+                                res.end(ref.code);
                             }
                         },
                     },
                     src
                 );
             } catch (e) {
-                console.log(e);
+                if (debug) console.log(e);
                 res.statusCode = 404;
                 res.end("");
             }
@@ -142,6 +130,7 @@ export const createServer = ({ base, port, spa, cdn, cert }) => {
             () =>
                 ready({
                     port,
+                    build,
                     reload() {
                         responses.forEach((res) =>
                             sendMessage(res, "message", "reloading")
