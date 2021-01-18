@@ -2,7 +2,7 @@
     "name": "@devserver/cli",
     "description": "Minimalist development server",
     "type": "module",
-    "version": "0.11.2",
+    "version": "0.11.3",
     "scripts": {
         "example:dev": "node src/cli.js dev example --ssl --port 8080 --debug",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080",

@@ -35,11 +35,13 @@ export async function resolve(
     );
 
     let file = "";
-
-    if (!subpathname && pkg.module) {
+    // Export priority
+    if (pkg.exports) {
+        file = packageExports.packageExports(pkg.exports, subpathname);
+    }
+    // Alternative export
+    if (!file && !subpathname && pkg.module) {
         file = pkg.module;
-    } else if (pkg.exports) {
-        file = packageExports(pkg.exports, subpathname);
     }
 
     return new URL(
