@@ -39,11 +39,17 @@ export async function resolve(
     if (!subpathname && pkg.module) {
         file = pkg.module;
     } else if (pkg.exports) {
-        file =
-            packageExports(pkg.exports, subpathname) || subpathname || "index";
+        file = packageExports(pkg.exports, subpathname);
     }
+
     return new URL(
-        join(folder, addDefaultExtension(file, defaultExtension)),
+        join(
+            folder,
+            addDefaultExtension(
+                file || subpathname || "index",
+                defaultExtension
+            )
+        ),
         moduleFolder
     );
 }

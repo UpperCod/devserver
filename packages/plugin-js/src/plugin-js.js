@@ -7,14 +7,10 @@ import { pluginTerser } from "./plugin-terser.js";
  * @param {string[]} options.external
  * @param {string} options.base
  * @param {boolean|string} [options.cdn]
+ * @param {RegExp} [options.include]
  * @returns {import("@devserver/build-core").Plugin}
  */
-export const pluginJs = ({ external, base, cdn }) => ({
-    data: [],
-    filter(src) {
-        if (src.endsWith(".html")) this.data.push(src);
-        return false;
-    },
+export const pluginJs = ({ external, base, cdn, include = /.(js|mjs)$/ }) => ({
     async loaded({ output, options, load, set }) {
         /**
          * @type {import("@devserver/build-core").Ref[]}
@@ -29,7 +25,7 @@ export const pluginJs = ({ external, base, cdn }) => ({
 
         for (const file in output) {
             if (file.endsWith(".html")) site = true;
-            if (!file.endsWith(".js")) continue;
+            if (!include.test(file)) continue;
             const ref = output[file];
             (ref.asset ? assets : input).push(ref);
         }

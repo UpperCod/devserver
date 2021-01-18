@@ -6,8 +6,8 @@ import { replaceImport } from "@devserver/replace-import";
  * @param {string} options.cdn
  * @returns {import("@devserver/build-core").Plugin}
  */
-export const pluginJs = ({ cdn }) => ({
-    filter: (file) => file.endsWith(".js"),
+export const pluginJs = ({ cdn, include = /\.(js|mjs)$/ }) => ({
+    filter: (file) => include.test(file),
     async load(ref, { set }) {
         const m = await replaceImport(
             await ref.read(),
@@ -17,7 +17,7 @@ export const pluginJs = ({ cdn }) => ({
             (value) => {
                 const { src, scope, quote } = value;
                 const ext = path.extname(src);
-                if (/^\.|\//.test(src) && ext && ext != ".js") {
+                if (/^\.|\//.test(src) && ext && !this.filter(src)) {
                     value.toString = () =>
                         `const ${scope} = new URL(${
                             quote + src + quote

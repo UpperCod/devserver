@@ -4,7 +4,7 @@
     "type": "module",
     "version": "0.11.1",
     "scripts": {
-        "example:dev": "node src/cli.js dev example --ssl --port 8080",
+        "example:dev": "node src/cli.js dev example --ssl --port 8080 --debug",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080",
         "example:build:cjs": "node ./cli.cjs build example/**/*.html public",
         "example:build": "node src/cli.js build example/**/*.html public  --external --sourcemap",
@@ -36,10 +36,10 @@
         "atomico": "^1.9.1",
         "ava": "^3.14.0",
         "cac": "^6.7.1",
+        "htm": "^3.0.4",
         "https-localhost": "^4.6.4",
         "mime": "^2.4.7",
-        "rollup": "^2.35.1",
-        "rollup-plugin-terser": "^7.0.2"
+        "rollup": "^2.35.1"
     },
     "bin": {
         "devserver": "./cli.cjs"
