@@ -1,57 +1,57 @@
 {
-	"name": "@devserver/cli",
-	"description": "Minimalist development server",
-	"type": "module",
-	"version": "0.11.3",
-	"scripts": {
-		"example:dev": "node src/cli.js dev example --ssl --port 8080 --debug",
-		"example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080",
-		"example:build:cjs": "node ./cli.cjs build example/**/*.html public",
-		"example:build": "node src/cli.js build example/**/*.html public  --external --sourcemap",
-		"test": "ava",
-		"build": "rollup -c",
-		"prepare": "pnpm run build && pnpm run test"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"author": "UpperCod",
-	"repository": {
-		"type": "git",
-		"url": "git+ssh://git@github.com/UpperCod/devserver.git"
-	},
-	"license": "ISC",
-	"dependencies": {
-		"@devserver/build-core": "0.11.3",
-		"@devserver/replace-import": "0.11.3",
-		"@devserver/resolve": "0.11.3"
-	},
-	"devDependencies": {
-		"@betit/rollup-plugin-rename-extensions": "^0.1.0",
-		"@devserver/build": "0.11.3",
-		"@rollup/plugin-commonjs": "^17.0.0",
-		"@rollup/plugin-node-resolve": "9.0.0",
-		"@rollup/plugin-replace": "^2.3.4",
-		"@uppercod/exp-route": "^1.2.1",
-		"atomico": "^1.9.1",
-		"ava": "^3.14.0",
-		"cac": "^6.7.1",
-		"htm": "^3.0.4",
-		"https-localhost": "^4.6.4",
-		"mime": "^2.4.7",
-		"rollup": "^2.35.1"
-	},
-	"bin": {
-		"devserver": "./cli.cjs"
-	},
-	"prettier": {
-		"tabWidth": 4,
-		"singleQuote": false
-	},
-	"ava": {
-		"files": [
-			"tests/**/*.test.js",
-			"packages/**/*.test.js"
-		]
-	}
+    "name": "@devserver/cli",
+    "description": "Minimalist development server",
+    "type": "module",
+    "version": "0.11.4",
+    "scripts": {
+        "example:dev": "node src/cli.js dev example --ssl --port 8080 --debug",
+        "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080",
+        "example:build:cjs": "node ./cli.cjs build example/**/*.html public",
+        "example:build": "node src/cli.js build example/**/*.html public  --external --sourcemap",
+        "test": "ava",
+        "build": "rollup -c",
+        "prepare": "pnpm run build && pnpm run test"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "author": "UpperCod",
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/UpperCod/devserver.git"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "@devserver/build-core": "0.11.3",
+        "@devserver/replace-import": "0.11.3",
+        "@devserver/resolve": "0.11.3"
+    },
+    "devDependencies": {
+        "@betit/rollup-plugin-rename-extensions": "^0.1.0",
+        "@devserver/build": "0.11.3",
+        "@rollup/plugin-commonjs": "^17.0.0",
+        "@rollup/plugin-node-resolve": "9.0.0",
+        "@rollup/plugin-replace": "^2.3.4",
+        "@uppercod/exp-route": "^1.2.1",
+        "atomico": "^1.9.1",
+        "ava": "^3.14.0",
+        "cac": "^6.7.1",
+        "htm": "^3.0.4",
+        "https-localhost": "^4.6.4",
+        "mime": "^2.4.7",
+        "rollup": "^2.35.1"
+    },
+    "bin": {
+        "devserver": "./cli.cjs"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "singleQuote": false
+    },
+    "ava": {
+        "files": [
+            "tests/**/*.test.js",
+            "packages/**/*.test.js"
+        ]
+    }
 }

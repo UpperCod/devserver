@@ -1,7 +1,7 @@
 {
     "name": "@devserver/package-exports",
     "type": "module",
-    "version": "0.11.3",
+    "version": "0.11.4",
     "description": "utilities for the replacement of imports in js files",
     "main": "./package-exports.cjs",
     "module": "./src/package-exports.js",
