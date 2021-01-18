@@ -1,12 +1,12 @@
 importers:
   .:
     dependencies:
-      '@devserver/build-core': 'link:packages/build-core'
-      '@devserver/replace-import': 'link:packages/replace-import'
-      '@devserver/resolve': 'link:packages/resolve'
+      '@devserver/build-core': 0.11.3
+      '@devserver/replace-import': 0.11.3
+      '@devserver/resolve': 0.11.3
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/build': 'link:packages/build'
+      '@devserver/build': 0.11.3
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.35.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.35.1
       '@rollup/plugin-replace': 2.3.4_rollup@2.35.1
@@ -20,10 +20,10 @@ importers:
       rollup: 2.35.1
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
-      '@devserver/build': 'workspace:*'
-      '@devserver/build-core': 'workspace:*'
-      '@devserver/replace-import': 'workspace:*'
-      '@devserver/resolve': 'workspace:*'
+      '@devserver/build': 0.11.3
+      '@devserver/build-core': 0.11.3
+      '@devserver/replace-import': 0.11.3
+      '@devserver/resolve': 0.11.3
       '@rollup/plugin-commonjs': ^17.0.0
       '@rollup/plugin-node-resolve': 9.0.0
       '@rollup/plugin-replace': ^2.3.4
@@ -38,11 +38,11 @@ importers:
   packages/build:
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/build-core': 'link:../build-core'
-      '@devserver/external': 'link:../externals'
-      '@devserver/plugin-css': 'link:../plugin-css'
-      '@devserver/plugin-html': 'link:../plugin-html'
-      '@devserver/plugin-js': 'link:../plugin-js'
+      '@devserver/build-core': link:../build-core
+      '@devserver/external': link:../externals
+      '@devserver/plugin-css': link:../plugin-css
+      '@devserver/plugin-html': link:../plugin-html
+      '@devserver/plugin-js': link:../plugin-js
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.35.1
       '@rollup/plugin-json': 4.1.0_rollup@2.35.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.35.1
@@ -52,11 +52,11 @@ importers:
       rollup: 2.35.1
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
-      '@devserver/build-core': 'workspace:*'
-      '@devserver/external': 'workspace:*'
-      '@devserver/plugin-css': 'workspace:*'
-      '@devserver/plugin-html': 'workspace:*'
-      '@devserver/plugin-js': 'workspace:*'
+      '@devserver/build-core': workspace:*
+      '@devserver/external': workspace:*
+      '@devserver/plugin-css': workspace:*
+      '@devserver/plugin-html': workspace:*
+      '@devserver/plugin-js': workspace:*
       '@rollup/plugin-commonjs': ^17.0.0
       '@rollup/plugin-json': ^4.1.0
       '@rollup/plugin-node-resolve': 9.0.0
@@ -110,14 +110,14 @@ importers:
       postcss-csso: 5.0.0_postcss@8.2.2
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/build-core': 'link:../build-core'
+      '@devserver/build-core': link:../build-core
       '@uppercod/hash': 1.1.1
       ava: 3.14.0
       builtin-modules: 3.2.0
       rollup: 2.35.1
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
-      '@devserver/build-core': 'workspace:*'
+      '@devserver/build-core': workspace:*
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
@@ -127,33 +127,33 @@ importers:
   packages/plugin-html:
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/build-core': 'link:../build-core'
+      '@devserver/build-core': link:../build-core
       '@uppercod/hash': 1.1.1
       ava: 3.14.0
       builtin-modules: 3.2.0
       rollup: 2.35.1
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
-      '@devserver/build-core': 'workspace:*'
+      '@devserver/build-core': workspace:*
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
       rollup: ^2.21.0
   packages/plugin-js:
     dependencies:
-      '@devserver/resolve': 'link:../resolve'
+      '@devserver/resolve': link:../resolve
       rollup: 2.35.1
       terser: 5.5.1
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/build-core': 'link:../build-core'
+      '@devserver/build-core': link:../build-core
       '@uppercod/hash': 1.1.1
       ava: 3.14.0
       builtin-modules: 3.2.0
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
-      '@devserver/build-core': 'workspace:*'
-      '@devserver/resolve': 'workspace:*'
+      '@devserver/build-core': workspace:*
+      '@devserver/resolve': workspace:*
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
@@ -178,14 +178,14 @@ importers:
       rollup: ^2.21.0
   packages/resolve:
     dependencies:
-      '@devserver/package-exports': 'link:../package-exports'
+      '@devserver/package-exports': link:../package-exports
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       ava: 3.14.0
       rollup: 2.35.1
     specifiers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
-      '@devserver/package-exports': 'workspace:*'
+      '@devserver/package-exports': workspace:*
       ava: ^3.10.1
       rollup: ^2.21.0
 lockfileVersion: 5.2
@@ -290,6 +290,28 @@ packages:
       node: '>=6.12.3 <7 || >=8.9.4 <9 || >=10.0.0'
     resolution:
       integrity: sha512-huLSkUuM2/P+U0uy2WwlKuixMsTODD8p4JVQBI4VKeopkiN0C7M3N9XYVawb4M+4spN5RrO/eLhk7KoQX6nsfA==
+  /@devserver/build-core/0.11.3:
+    dev: false
+    resolution:
+      integrity: sha512-jdWdGee33hKgMVMhrjBrxH6+7YsiMhQorXVGMMDGOTSMcdMasJe8QaWRaFN7G364K7ynRarDM2ToWE9Gn1lLLA==
+  /@devserver/build/0.11.3:
+    dev: true
+    resolution:
+      integrity: sha512-FLiCMW1iPCgbUN9O2BjoTikRRQxMROUk5+b9cGzcu6qUUqeBYXcaTUXWwAWFqDO0UkcFTnT9Tg3/F8fx2CcpjQ==
+  /@devserver/package-exports/0.11.3:
+    dev: false
+    resolution:
+      integrity: sha512-SXD+xmfUIasPpYdcIRcuGCAy7ELOOeKgPVGsusekVCt9MtbBi+c0aDPjs5SvtMWQKcUHu43UK7X0FnHMkm4oaw==
+  /@devserver/replace-import/0.11.3:
+    dev: false
+    resolution:
+      integrity: sha512-cFkT4+/U0ghw27Buh8cavz/jucyuMPWdIfFf1E6QgTlGD5CqjkFevoRmsEhY5XaALURgl/47CvFq/k82u2AIqA==
+  /@devserver/resolve/0.11.3:
+    dependencies:
+      '@devserver/package-exports': 0.11.3
+    dev: false
+    resolution:
+      integrity: sha512-6CCQc0Eni0iJpRJTzgj2pbL5nqfOHS+ZtzOQukNj0tut6JdIPTdoEJm0T/f48jPeEsYJVbOCieMYr1jvoH3AFw==
   /@nodelib/fs.scandir/2.1.3:
     dependencies:
       '@nodelib/fs.stat': 2.0.3
