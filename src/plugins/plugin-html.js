@@ -10,10 +10,7 @@ export const pluginHtml = ({ notFound }) => ({
     async load(ref) {
         const code = await ref.read().catch(() => readFile(notFound, "utf8"));
         const reload = `
-            <script>{
-            let source = new EventSource('/livereload');
-            source.onmessage = e =>  setTimeout(()=>location.reload(),250);
-            }</script>
+            <script src="/livereload.js"></script>
         `;
         ref.code = code + reload;
     },

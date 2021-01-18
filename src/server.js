@@ -68,6 +68,13 @@ export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
                             // Watch the target directory for changes and trigger reload
                             responses.push(res);
                         },
+                        "/livereload.js": () => {
+                            setCache(res, 600);
+                            setContentType(res, ".js");
+                            res.end(
+                                `if(!window._reload){ new EventSource('/livereload').onmessage = e =>  setTimeout(()=>location.reload(),250); }`
+                            );
+                        },
                         "/npm/{...pkg}": async ({ pkg }) => {
                             setCache(res, 600);
 
