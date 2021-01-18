@@ -37,7 +37,7 @@ export async function resolve(
     let file = "";
     // Export priority
     if (pkg.exports) {
-        file = packageExports.packageExports(pkg.exports, subpathname);
+        file = packageExports(pkg.exports, subpathname);
     }
     // Alternative export
     if (!file && !subpathname && pkg.module) {
