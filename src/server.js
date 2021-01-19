@@ -6,6 +6,7 @@ import { Build } from "@devserver/build-core";
 import { routes } from "./routes.js";
 import {
     setCache,
+    setNoCors,
     setNoCache,
     sendStream,
     setRedirect,
@@ -50,6 +51,8 @@ export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
         const handler = async (req, res) => {
             const src = pathname(req.url);
             try {
+                setNoCors(res);
+
                 await routes(
                     {
                         "/favicon.ico": () => res.end(""),
