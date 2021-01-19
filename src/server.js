@@ -72,7 +72,7 @@ export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
                             setCache(res, 600);
                             setContentType(res, ".js");
                             res.end(
-                                `if(!window._reload){ new EventSource('/livereload').onmessage = e =>  setTimeout(()=>location.reload(),250); }`
+                                `new EventSource(new URL('/livereload',import.meta.url).href).onmessage = e =>  setTimeout(()=>location.reload());`
                             );
                         },
                         "/npm/{...pkg}": async ({ pkg }) => {

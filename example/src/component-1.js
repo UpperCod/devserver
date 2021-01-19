@@ -7,7 +7,7 @@ function component() {
     console.log(import("./sub/dinamic-import.js"));
     return html`<host shadowDom>
         <link rel="stylesheet" href=${href} />
-        lorem...ss
+        Reload?
     </host>`;
 }
 
