@@ -2,7 +2,7 @@ import glob from "fast-glob";
 import { Build } from "@devserver/build-core";
 import { pluginHtml } from "@devserver/plugin-html";
 import { pluginCss } from "@devserver/plugin-css";
-import { pluginJs } from "@devserver/plugin-js";
+import { pluginJs, isJs } from "@devserver/plugin-js";
 import { getExternal } from "@devserver/external";
 
 /**
@@ -45,7 +45,7 @@ export async function build({
             pluginHtml(),
             pluginCss(),
             {
-                filter: (file) => !/\.(js|css|html)$/.test(file),
+                filter: (file) => !/\.(css|html)$/.test(file) && !isJs(file),
                 async load(ref) {
                     ref.copy = true;
                 },

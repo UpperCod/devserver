@@ -59,7 +59,10 @@ export class Build {
         return {
             root: pathname("/" + id),
             get name() {
-                return asset ? hash(id) + path.extname(id) : path.basename(id);
+                return asset
+                    ? hash(id) +
+                          path.extname(id).replace(/\.(jsx|ts|tsx)$/, ".js")
+                    : path.basename(id);
             },
             get href() {
                 return pathname([self.options.href, this.dest].join("/"));

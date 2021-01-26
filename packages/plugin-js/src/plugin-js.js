@@ -1,16 +1,16 @@
 import { rollup } from "rollup";
 import { pluginChunk } from "./plugin-chunk.js";
-import { pluginResolve } from "./plugin-resolve.js";
+import { pluginResolve, isJs } from "./plugin-resolve.js";
 import { pluginTerser } from "./plugin-terser.js";
+export { isJs } from "./plugin-resolve.js";
 /**
  * @param {Object} options
  * @param {string[]} options.external
  * @param {string} options.base
  * @param {boolean|string} [options.cdn]
- * @param {RegExp} [options.include]
  * @returns {import("@devserver/build-core").Plugin}
  */
-export const pluginJs = ({ external, base, cdn, include = /.(js|mjs)$/ }) => ({
+export const pluginJs = ({ external, base, cdn }) => ({
     async loaded({ output, options, load, set }) {
         /**
          * @type {import("@devserver/build-core").Ref[]}
@@ -25,7 +25,7 @@ export const pluginJs = ({ external, base, cdn, include = /.(js|mjs)$/ }) => ({
 
         for (const file in output) {
             if (file.endsWith(".html")) site = true;
-            if (!include.test(file)) continue;
+            if (!isJs(file)) continue;
             const ref = output[file];
             (ref.asset ? assets : input).push(ref);
         }

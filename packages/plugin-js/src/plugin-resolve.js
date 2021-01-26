@@ -1,6 +1,7 @@
 import path from "path";
 import { resolve } from "@devserver/resolve";
 import { transformJs } from "@devserver/transform-js";
+export { isJs } from "@devserver/transform-js";
 /**
  * Resolves the path of the resources only if they exist in NPM
  * @param {Object} options
