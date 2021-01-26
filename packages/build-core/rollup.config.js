@@ -11,7 +11,7 @@ export default {
         format: "cjs",
         sourcemap: false,
     },
-    external: Object.keys(pkg.dependencies || {}).concat(builtins),
+    external: Object.keys(pkg.dependencies).concat(builtins),
     plugins: [
         resolve(),
         commonjs(),

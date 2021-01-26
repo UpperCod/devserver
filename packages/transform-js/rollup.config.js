@@ -1,7 +1,8 @@
-import pkg from "./package.json";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import renameExtensions from "@betit/rollup-plugin-rename-extensions";
+import { terser } from "rollup-plugin-terser";
+import pkg from "./package.json";
 
 export default {
     input: "./src/transform-js.js",
@@ -20,5 +21,6 @@ export default {
                 ".js": ".cjs",
             },
         }),
+        terser(),
     ],
 };

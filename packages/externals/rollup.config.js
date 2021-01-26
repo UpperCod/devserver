@@ -9,7 +9,7 @@ export default {
         format: "cjs",
         sourcemap: true,
     },
-    external: Object.keys(pkg.dependencies || {}).concat(builtins),
+    external: Object.keys(pkg.dependencies).concat(builtins),
     plugins: [
         renameExtensions({
             include: ["**/*.js"],

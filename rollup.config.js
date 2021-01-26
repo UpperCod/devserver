@@ -1,6 +1,7 @@
 import renameExtensions from "@betit/rollup-plugin-rename-extensions";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
+import { terser } from "rollup-plugin-terser";
 import commonjs from "@rollup/plugin-commonjs";
 import pkg from "./package.json";
 
@@ -36,5 +37,6 @@ export default {
                 ".js": ".cjs",
             },
         }),
+        terser(),
     ],
 };
