@@ -14,4 +14,4 @@ export const prepareDir = (dir) => {
  *
  * @param {string} dir
  */
-export const pathname = (dir) => dir.replace(/\\+/g, "/");
+export const pathname = (dir) => dir.replace(/[\\\/]+/g, "/");

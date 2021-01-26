@@ -15,7 +15,7 @@ import {
     setContentType,
 } from "./responses.js";
 import { pathname, addDefaultIndex } from "./utils.js";
-import { pluginJs } from "./plugins/plugin-js.js";
+import { pluginJs, isJs } from "./plugins/plugin-js.js";
 import { pluginHtml } from "./plugins/plugin-html.js";
 
 let responses = [];
@@ -35,7 +35,7 @@ export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
         pluginJs({ cdn }),
         pluginHtml({ notFound }),
         {
-            filter: (src) => !/.(html|js)$/.test(src),
+            filter: (src) => !src.endsWith(".html") && !isJs(src),
             load(ref) {
                 ref.copy = true;
             },
@@ -118,7 +118,10 @@ export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
 
                             await ref.task;
 
-                            setContentType(res, ref.id);
+                            setContentType(
+                                res,
+                                ref.id.endsWith(".jsx") ? ".js" : ref.id
+                            );
 
                             if (ref.copy) {
                                 return sendStream(res, file);
@@ -130,6 +133,7 @@ export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
                     src
                 );
             } catch (e) {
+                setNoCache(res);
                 if (debug) console.log(e);
                 res.statusCode = 404;
                 res.end("");

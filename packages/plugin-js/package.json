@@ -32,6 +32,7 @@
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
         "@devserver/resolve": "workspace:*",
+        "@devserver/transform-js": "workspace:*",
         "rollup": "^2.35.1",
         "terser": "^5.5.1"
     },

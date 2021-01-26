@@ -1,6 +1,6 @@
 import path from "path";
 import { resolve } from "@devserver/resolve";
-import { replaceImport } from "@devserver/replace-import";
+import { transformJs } from "@devserver/transform-js";
 /**
  * Resolves the path of the resources only if they exist in NPM
  * @param {Object} options
@@ -35,28 +35,38 @@ export const pluginResolve = ({ base, cdn, load }) => ({
               );
     },
     async transform(code, source) {
-        const m = await replaceImport(code, (token) => {
-            const { src, scope, quote } = token;
-            const ext = path.extname(src);
-            if (/^\.|\//.test(src) && ext && ext != ".js") {
-                token.toString = () =>
-                    `const ${scope} = new URL(${
-                        quote +
-                        load(path.join(path.dirname(source), src), true).link
-                            .name +
-                        quote
-                    }, import.meta.url)`;
-            }
-            return token;
+        return transformJs({
+            code,
+            file: source,
+            /**
+             *
+             * @param {string} src
+             */
+            load: (src) =>
+                load(path.join(path.dirname(source), src), true).link,
         });
+        // const m = await replaceImport(code, (token) => {
+        //     const { src, scope, quote } = token;
+        //     const ext = path.extname(src);
+        //     if (/^\.|\//.test(src) && ext && ext != ".js") {
+        //         token.toString = () =>
+        //             `const ${scope} = new URL(${
+        //                 quote +
+        //                 load(path.join(path.dirname(source), src), true).link
+        //                     .name +
+        //                 quote
+        //             }, import.meta.url)`;
+        //     }
+        //     return token;
+        // });
 
-        const map = m.generateMap({
-            hires: true,
-        });
+        // const map = m.generateMap({
+        //     hires: true,
+        // });
 
-        return {
-            code: m + "",
-            map,
-        };
+        // return {
+        //     code: m + "",
+        //     map,
+        // };
     },
 });

@@ -1,46 +1,28 @@
-import path from "path";
-import { replaceImport } from "@devserver/replace-import";
+import { transformJs, isJs } from "@devserver/transform-js";
+
+export { isJs } from "@devserver/transform-js";
 /**
  *
  * @param {Object} options
  * @param {string} options.cdn
  * @returns {import("@devserver/build-core").Plugin}
  */
-export const pluginJs = ({ cdn, include = /\.(js|mjs)$/ }) => ({
-    filter: (file) => include.test(file),
+export const pluginJs = ({ cdn }) => ({
+    filter: (file) => isJs(file),
     async load(ref, { set }) {
-        const m = await replaceImport(
-            await ref.read(),
-            /**
-             * @param {import("@devserver/replace-import").Token} value
-             */
-            (value) => {
-                const { src, scope, quote } = value;
-                const ext = path.extname(src);
-                if (/^\.|\//.test(src) && ext && !this.filter(src)) {
-                    value.toString = () =>
-                        `const ${scope} = new URL(${
-                            quote + src + quote
-                        }, import.meta.url)`;
-                } else if (!/^(\.|\/|http(s){0,1}\:\/\/)/.test(src)) {
-                    value.src = cdn ? `https://jspm.dev/${src}` : `/npm/${src}`;
-                }
-                return value;
-            }
-        );
+        const result = await transformJs({
+            code: await ref.read(),
+            file: ref.link.root,
+            npm: "/npm/",
+            load: (src) => src,
+        });
 
         const refMap = set(ref.id + ".map");
 
         refMap.task = true;
 
-        const map = m.generateMap({
-            source: ref.id,
-            file: refMap.link.href,
-            includeContent: true,
-        });
+        ref.code = result.code + `\n//# sourceMappingURL=${refMap.link.name}`;
 
-        ref.code = m + `\n//# sourceMappingURL=${refMap.link.name}`;
-
-        refMap.code = map + "";
+        refMap.code = JSON.stringify(result.map);
     },
 });

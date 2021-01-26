@@ -144,6 +144,7 @@ importers:
   packages/plugin-js:
     dependencies:
       '@devserver/resolve': link:../resolve
+      '@devserver/transform-js': link:../transform-js
       rollup: 2.35.1
       terser: 5.5.1
     devDependencies:
@@ -156,6 +157,7 @@ importers:
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
       '@devserver/build-core': workspace:*
       '@devserver/resolve': workspace:*
+      '@devserver/transform-js': workspace:*
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0

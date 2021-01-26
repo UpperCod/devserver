@@ -57,11 +57,9 @@ export class Build {
     link = (id, asset) => {
         const self = this;
         return {
-            id,
+            root: pathname("/" + id),
             get name() {
-                return asset
-                    ? hash(this.id) + path.extname(this.id)
-                    : path.basename(this.id);
+                return asset ? hash(id) + path.extname(id) : path.basename(id);
             },
             get href() {
                 return pathname([self.options.href, this.dest].join("/"));
@@ -70,7 +68,7 @@ export class Build {
                 return pathname(
                     asset
                         ? "assets/" + this.name
-                        : pathname(this.id).replace(self.regBase, "")
+                        : pathname(id).replace(self.regBase, "")
                 );
             },
         };
@@ -211,7 +209,7 @@ export class Build {
 
 /**
  * @typedef {Object} Link
- * @property {string} id
+ * @property {string} root
  * @property {string} name
  * @property {string} href
  * @property {string} dest
