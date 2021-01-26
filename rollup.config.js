@@ -28,7 +28,6 @@ export default {
         replace({
             "PKG.VERSION": pkg.version,
         }),
-
         resolve(),
         commonjs(),
         renameExtensions({
