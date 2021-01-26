@@ -1,15 +1,15 @@
 {
-    "name": "@devserver/external",
+    "name": "@devserver/transform-js",
     "type": "module",
-    "version": "0.11.7",
-    "description": "build for @devserver/cli",
-    "main": "./external.cjs",
-    "module": "./src/external.js",
-    "typings": "types.d.ts",
+    "version": "0.0.0",
+    "description": "utilities for the replacement of imports in js files",
+    "main": "./transform-js.cjs",
+    "module": "./src/transform-js.js",
+    "typings": "./transform-js.d.ts",
     "exports": {
         ".": {
-            "import": "./src/external.js",
-            "require": "./external.cjs"
+            "import": "./src/transform-js.js",
+            "require": "./transform-js.cjs"
         }
     },
     "publishConfig": {
@@ -19,7 +19,7 @@
         "build": "rollup -c",
         "dev": "rollup -c -w",
         "test": "ava",
-        "prepare": "pnpm run build"
+        "prepare": "npm run build"
     },
     "repository": {
         "type": "git",
@@ -32,12 +32,13 @@
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
-        "fast-glob": "^3.2.4"
+        "@devserver/replace-import": "workspace:*",
+        "merge-source-map": "^1.1.0",
+        "sucrase": "^3.17.0"
     },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
         "ava": "^3.10.1",
-        "builtin-modules": "^3.1.0",
         "rollup": "^2.35.1"
     }
 }

@@ -35,7 +35,7 @@
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
         "ava": "^3.10.1",
-        "rollup": "^2.21.0",
+        "rollup": "^2.35.1",
         "es-module-lexer": "^0.3.26",
         "magic-string": "^0.25.7",
         "@rollup/plugin-commonjs": "^17.0.0",

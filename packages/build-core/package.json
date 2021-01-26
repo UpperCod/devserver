@@ -36,7 +36,7 @@
         "@uppercod/hash": "^1.1.1",
         "ava": "^3.10.1",
         "builtin-modules": "^3.1.0",
-        "rollup": "^2.21.0",
+        "rollup": "^2.35.1",
         "@rollup/plugin-commonjs": "^17.0.0",
         "@rollup/plugin-node-resolve": "9.0.0"
     }

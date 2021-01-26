@@ -37,6 +37,6 @@
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
         "ava": "^3.10.1",
-        "rollup": "^2.21.0"
+        "rollup": "^2.35.1"
     }
 }
