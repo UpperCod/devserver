@@ -37,8 +37,8 @@
         "@devserver/plugin-js": "workspace:*"
     },
     "devDependencies": {
-        "@devserver/external": "workspace:*",
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
+        "@devserver/external": "workspace:*",
         "@rollup/plugin-commonjs": "^17.0.0",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "9.0.0",
