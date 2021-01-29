@@ -15,6 +15,7 @@ import { getExternal } from "@devserver/external";
  * @param {boolean} [options.minify] - minify the js code
  * @param {string[]} [options.external] - minify the js code
  * @param {boolean} [options.cdn] - minify the js code
+ * @param {string} [options.jsxImportSource] - Associate the alias for jsx-runtime
  */
 export async function build({
     src,
@@ -24,6 +25,7 @@ export async function build({
     minify,
     external,
     cdn,
+    jsxImportSource,
 }) {
     const base = src.replace(/^([^\*]+)(.*)/, "$1");
 
@@ -50,7 +52,7 @@ export async function build({
                     ref.copy = true;
                 },
             },
-            pluginJs({ external: externalPkgs, base, cdn }),
+            pluginJs({ external: externalPkgs, base, cdn, jsxImportSource }),
         ]
     );
     (await glob(src))

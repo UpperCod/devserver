@@ -1,1 +1,1 @@
-export { pluginJs } from "./src/plugin-js";
+export { pluginJs, isJs } from "./src/plugin-js";

@@ -21,18 +21,30 @@ import { pluginHtml } from "./plugins/plugin-html.js";
 let responses = [];
 
 /**
- *
- * @param {string} base
- * @param {number} port
- * @param {string} spa
+ * @param {Object} options
+ * @param {string} options.base
+ * @param {number} options.port
+ * @param {string} options.spa
+ * @param {string} options.cdn
+ * @param {string} options.cert
+ * @param {string} options.debug
+ * @param {string} options.jsxImportSource - Associate the alias for jsx-runtime
  * @returns {Promise<{port:number,build:Build,reload:()=>void}>}
  */
-export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
+export const createServer = ({
+    base,
+    port,
+    spa,
+    cdn,
+    cert,
+    debug,
+    jsxImportSource,
+}) => {
     // File to display for unresolved routes
     const notFound = path.join(base, spa || "404.html");
 
     const build = new Build({ base, dest: "" }, [
-        pluginJs({ cdn }),
+        pluginJs({ cdn, jsxImportSource }),
         pluginHtml({ notFound }),
         {
             filter: (src) => !src.endsWith(".html") && !isJs(src),
@@ -118,10 +130,7 @@ export const createServer = ({ base, port, spa, cdn, cert, debug }) => {
 
                             await ref.task;
 
-                            setContentType(
-                                res,
-                                ref.id.endsWith(".jsx") ? ".js" : ref.id
-                            );
+                            setContentType(res, isJs(ref.id) ? ".js" : ref.id);
 
                             if (ref.copy) {
                                 return sendStream(res, file);

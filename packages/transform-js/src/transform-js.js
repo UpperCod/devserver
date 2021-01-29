@@ -3,14 +3,51 @@ import { transform } from "sucrase";
 import { replaceImport } from "@devserver/replace-import";
 import merge from "merge-source-map";
 
+/**
+ * Defines if the file should be considered of type JS
+ * @param {string} file
+ * @returns {boolean}
+ */
 export const isJs = (file) => /\.(mjs|js|jsx|ts|tsx)/.test(file);
 
-export async function transformJs({ cdn, code, file, load, npm }) {
+/**
+ * Transfroma thanks to Sucrase code considered as JS
+ * @param {Object} options
+ * @param {string} [options.cdn] - Associate external dependencies with a CDN
+ * @param {string} options.code - Code to transform
+ * @param {string} options.file - Code source file
+ * @param {(src:string)=>string} options.load - Request the load path for an unresolved dependency like JS
+ * @param {string} [options.npm] - Associate a prefix for NPM dependencies, this option is only useful for the server
+ * @param {Transform} [options.transform]
+ *
+ * @returns {Promise<{code:string,map?:any}>}
+ */
+export async function transformJs({
+    cdn,
+    code,
+    file,
+    load,
+    npm = "",
+    transform: optionsTransform,
+}) {
     /**
      * @type {import("sucrase").Transform[]}
      */
     const use = [];
     const result = { code };
+
+    optionsTransform = {
+        ...optionsTransform,
+        jsxPragma: "jsx",
+        jsxFragmentPragma: "jsx",
+    };
+
+    let { jsxImportSource, jsxPragma, jsxFragmentPragma } = optionsTransform;
+
+    if (jsxImportSource) {
+        jsxPragma = "_jsx";
+        jsxFragmentPragma = "_jsx";
+    }
 
     if (/\.(jsx|tsx)$/.test(file)) use.push("jsx");
     if (/\.(tsx|ts)/.test(file)) use.push("typescript");
@@ -19,6 +56,8 @@ export async function transformJs({ cdn, code, file, load, npm }) {
         transforms: use,
         production: true,
         filePath: file,
+        jsxPragma,
+        jsxFragmentPragma,
         sourceMapOptions: {
             compiledFilename: file,
         },
@@ -27,7 +66,13 @@ export async function transformJs({ cdn, code, file, load, npm }) {
     result.code = resultTransform.code;
     result.map = resultTransform.sourceMap;
 
-    if (/import|export/.test(result.code)) {
+    if (/import|export/.test(result.code) || jsxImportSource) {
+        /**
+         *
+         * @param {string} src
+         */
+        const resolve = (src) => (cdn ? `https://jspm.dev/${src}` : npm + src);
+
         const resultReplaceImport = await replaceImport(
             result.code,
             /**
@@ -45,11 +90,20 @@ export async function transformJs({ cdn, code, file, load, npm }) {
                     !/^(\.|\/|http(s){0,1}\:\/\/)/.test(src) &&
                     (npm || cdn)
                 ) {
-                    value.src = cdn ? `https://jspm.dev/${src}` : npm + src;
+                    value.src = resolve(src);
                 }
                 return value;
             }
         );
+
+        if (jsxImportSource && use.includes("jsx")) {
+            resultReplaceImport.prepend(
+                `import {jsx as _jsx} from "${resolve(
+                    jsxImportSource + "/jsx-runtime"
+                )}";\n`
+            );
+        }
+
         result.code = resultReplaceImport.toString();
         result.map = merge(
             result.map,
@@ -63,3 +117,10 @@ export async function transformJs({ cdn, code, file, load, npm }) {
 
     return result;
 }
+
+/**
+ * @typedef {Object} Transform
+ * @property {string} [jsxPragma]
+ * @property {string} [jsxFragmentPragma]
+ * @property {string} [jsxImportSource]
+ */

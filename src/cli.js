@@ -10,6 +10,11 @@ command
     .command("dev <src>", "...")
     .option("--port [port]", "port for  server")
     .option("--spa", "page to resolve lost requests", "")
+    .option(
+        "--jsxImportSource [jsxImportSource]",
+        "Add support to jsx-runtime",
+        ""
+    )
     .option("--debug", "silence errors for failed responses", false)
     .option("--ssl", "enables the use of SSL and HTTP2", false)
     .option(
@@ -17,41 +22,47 @@ command
         "Enables the use of CDN avoiding the need to install the PKG",
         false
     )
-    .action(async (base = "./", { port = 80, spa, cdn, ssl, debug }) => {
-        const cert = ssl ? await createSSL(`localhost`) : false;
+    .action(
+        async (
+            base = "./",
+            { port = 80, spa, cdn, ssl, debug, jsxImportSource }
+        ) => {
+            const cert = ssl ? await createSSL(`localhost`) : false;
 
-        const devServer = await createServer({
-            port,
-            base,
-            spa,
-            cdn,
-            cert,
-            debug,
-        });
+            const devServer = await createServer({
+                port,
+                base,
+                spa,
+                cdn,
+                cert,
+                debug,
+                jsxImportSource,
+            });
 
-        log(
-            `DEV server running on ${ssl ? "https" : "http"}://localhost:${
-                devServer.port
-            }`
-        );
+            log(
+                `DEV server running on ${ssl ? "https" : "http"}://localhost:${
+                    devServer.port
+                }`
+            );
 
-        const watchLog = () => log(`Watcher waiting for changes...`);
+            const watchLog = () => log(`Watcher waiting for changes...`);
 
-        watchLog();
+            watchLog();
 
-        createWatch({
-            base,
-            async listener(files) {
-                for (const file in files) {
-                    delete devServer.build.output[file];
-                }
+            createWatch({
+                base,
+                async listener(files) {
+                    for (const file in files) {
+                        delete devServer.build.output[file];
+                    }
 
-                devServer.reload();
+                    devServer.reload();
 
-                watchLog();
-            },
-        });
-    });
+                    watchLog();
+                },
+            });
+        }
+    );
 
 command
     .command("build <src> <dest>")
@@ -59,6 +70,11 @@ command
     .option(
         "--href",
         "associates a prefix for the output of assets declared in html files",
+        ""
+    )
+    .option(
+        "--jsxImportSource [jsxImportSource]",
+        "Add support to jsx-runtime",
         ""
     )
     .option("--sourcemap", "enable the generation of sourcemap")
@@ -76,7 +92,7 @@ command
         async (
             src = "./",
             dest = "",
-            { minify, href, external, cdn, sourcemap }
+            { minify, href, external, cdn, sourcemap, jsxImportSource }
         ) => {
             const { build } = await import("@devserver/build");
             log(`Build starting from ${src} to ${dest}...`);
@@ -92,6 +108,7 @@ command
                             : false,
                     cdn,
                     sourcemap,
+                    jsxImportSource,
                 });
                 log(`Build completed!`);
             } catch (e) {

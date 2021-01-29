@@ -1,16 +1,19 @@
 {
     "compilerOptions": {
-        "module": "esnext",
+        "module": "ESnext",
         "moduleResolution": "node",
-        "target": "esnext",
+        "target": "ESnext",
         "checkJs": true,
         "baseUrl":"./",
+        "jsx":"preserve",
+        "jsxImportSource": "atomico",
         "paths": {
-            "@devserver/*": ["packages/*/src"]
-        },
+            "@devserver/*": ["packages/*/src"],
+        }
     },
     "include": [
         "packages/**/*",
+        "example/**/*"
     ],
     "exclude": [
         "**/rollup.config.js"

@@ -8,9 +8,10 @@ export { isJs } from "@devserver/transform-js";
  * @param {string} options.base - define the root directory of the assets
  * @param {boolean|string} options.cdn - define the root directory of the assets
  * @param {(src:string,asset:boolean)=>any} options.load - define the root directory of the assets
+ * @param {string} [options.jsxImportSource] - Associate the alias for jsx-runtime
  * @returns {import("rollup").Plugin}
  */
-export const pluginResolve = ({ base, cdn, load }) => ({
+export const pluginResolve = ({ base, cdn, load, jsxImportSource }) => ({
     name: "plugin-resolve",
     resolveId(source, importer) {
         // ignore dependency if this is already a url
@@ -45,29 +46,7 @@ export const pluginResolve = ({ base, cdn, load }) => ({
              */
             load: (src) =>
                 load(path.join(path.dirname(source), src), true).link,
+            transform: { jsxImportSource },
         });
-        // const m = await replaceImport(code, (token) => {
-        //     const { src, scope, quote } = token;
-        //     const ext = path.extname(src);
-        //     if (/^\.|\//.test(src) && ext && ext != ".js") {
-        //         token.toString = () =>
-        //             `const ${scope} = new URL(${
-        //                 quote +
-        //                 load(path.join(path.dirname(source), src), true).link
-        //                     .name +
-        //                 quote
-        //             }, import.meta.url)`;
-        //     }
-        //     return token;
-        // });
-
-        // const map = m.generateMap({
-        //     hires: true,
-        // });
-
-        // return {
-        //     code: m + "",
-        //     map,
-        // };
     },
 });
