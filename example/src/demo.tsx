@@ -4,7 +4,7 @@ function component(props: Props<typeof component.props>) {
     const ref = useHost();
     return (
         <host shadowDom onSubmit={() => {}}>
-            <h1>hola mundo,TSX</h1>
+            <h1>hola mundo!,TSX</h1>
             <slot
                 onslotchange={(event) => {
                     console.log(event.target);

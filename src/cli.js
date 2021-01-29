@@ -68,25 +68,18 @@ command
     .command("build <src> <dest>")
     .option("--minify", "minify the js code")
     .option(
-        "--href",
-        "associates a prefix for the output of assets declared in html files",
-        ""
+        "--href [href]",
+        "associates a prefix for the output of assets declared in html files"
     )
-    .option(
-        "--jsxImportSource [jsxImportSource]",
-        "Add support to jsx-runtime",
-        ""
-    )
+    .option("--jsxImportSource [jsxImportSource]", "Add support to jsx-runtime")
     .option("--sourcemap", "enable the generation of sourcemap")
     .option(
         "--external [external]",
-        "allows adding external dependencies manually",
-        ""
+        "allows adding external dependencies manually"
     )
     .option(
         "--cdn",
-        "Enables the use of CDN avoiding the need to install the PKG",
-        ""
+        "Enables the use of CDN avoiding the need to install the PKG"
     )
     .action(
         async (

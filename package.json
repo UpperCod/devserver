@@ -6,7 +6,7 @@
     "scripts": {
         "example:dev": "node src/cli.js dev example --port 8080 --debug --jsxImportSource atomico",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080 --jsxImportSource atomico",
-        "example:build:cjs": "node ./cli.cjs build example/**/*.html public --jsxImportSource atomico",
+        "example:build:cjs": "node ./cli.cjs build example/**/*.html public --jsxImportSource atomico --href age/master",
         "example:build": "node src/cli.js build example/**/*.html public  --external --sourcemap --jsxImportSource atomico",
         "test": "ava",
         "build": "rollup -c",
