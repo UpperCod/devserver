@@ -42,12 +42,12 @@ importers:
   packages/build:
     dependencies:
       '@devserver/build-core': link:../build-core
-      '@devserver/external': link:../externals
       '@devserver/plugin-css': link:../plugin-css
       '@devserver/plugin-html': link:../plugin-html
       '@devserver/plugin-js': link:../plugin-js
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
+      '@devserver/external': link:../externals
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.1
       '@rollup/plugin-json': 4.1.0_rollup@2.38.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.38.1

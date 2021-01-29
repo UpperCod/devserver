@@ -1,7 +1,4 @@
 *
 !/*.cjs
-!/*.cjs.map 
-!/*.js
-!/*.js.map 
+!/*.cjs.map
 !/src
-/*.config.js

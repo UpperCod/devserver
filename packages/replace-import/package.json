@@ -1,7 +1,7 @@
 {
     "name": "@devserver/replace-import",
     "type": "module",
-    "version": "0.12.0",
+    "version": "0.12.1",
     "description": "utilities for the replacement of imports in js files",
     "main": "./replace-import.cjs",
     "module": "./src/replace-import.js",
