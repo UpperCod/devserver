@@ -4,7 +4,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import builtins from "builtin-modules";
 import { terser } from "rollup-plugin-terser";
-import pkg from "./package.json";
 
 export default {
     input: ["./src/plugin-css.js"],
@@ -13,7 +12,7 @@ export default {
         format: "cjs",
         sourcemap: false,
     },
-    external: Object.keys(pkg.dependencies).concat(builtins),
+    external: builtins,
     plugins: [
         resolve(),
         commonjs(),
