@@ -45,7 +45,7 @@ export const pluginResolve = ({ base, cdn, load, jsxImportSource }) => ({
              * @param {string} src
              */
             load: (src) =>
-                load(path.join(path.dirname(source), src), true).link,
+                load(path.join(path.dirname(source), src), true).link.href,
             transform: { jsxImportSource },
         });
     },

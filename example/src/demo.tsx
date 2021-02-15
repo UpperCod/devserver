@@ -1,4 +1,7 @@
 import { Props, c, useHost } from "atomico";
+import style from "../assets/vars.css";
+
+console.log(style);
 
 function component(props: Props<typeof component.props>) {
     const ref = useHost();

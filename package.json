@@ -2,7 +2,7 @@
     "name": "@devserver/cli",
     "description": "Minimalist development server",
     "type": "module",
-    "version": "0.12.1",
+    "version": "0.12.2",
     "scripts": {
         "example:dev": "node src/cli.js dev example --port 8080 --debug --jsxImportSource atomico",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080 --jsxImportSource atomico",
