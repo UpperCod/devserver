@@ -1,89 +1,85 @@
 # @devserver/cli
 
-Minimalist development server, focused on providing support for JS modules, HTML, CSS and assets, with module resolution based on NPM and CDN.
+Minimalist development server with minimal disk impact and designed for modern development.
 
-Example:
+**Dev support**
 
-<table width="100%">
-<tr>
-<td>
+1. Support for JSX(pragma and jsx-runtime) and TS tanks to Sucrace.
+2. Livereload, HTTP2 with automatic SSL.
+3. Resolution from NPM only if the package has support for modules declared by `package.json#exports` or` package.json#module`.
+4. Alternative NPM package resolution via CDN.
 
-**src/custom-element.js**
+**Build support**
 
-</td>
+1. Support for JSX(pragma and jsx-runtime) and TS tanks to Sucrace.
+2. Assets hash.
+3. CSS and JS optimization.
+4. Resolution from NPM only if the package has support for modules declared by `package.json#exports` or` package.json#module`.
+5. Automatic detection of external dependencies.
+6. Alternative NPM package resolution via CDN.
 
-<td>
+**Considerations**
 
-**src/index.html**
-
-</td>
-
-</tr>
-<tr>
-<td>
-
-```js
-import { c } from "atomico";
-import html from "atomico/html";
-
-function component() {
-    return html`<host>web app</host>`;
-}
-
-customElements.define("custom-element", c(component));
-```
-
-</td>
-<td>
-
-```html
-<script src="./custom-element.js" type="module"></script>
-<custom-element></custom-element>
-```
-
-</td>
-
-</tr>
-</table>
-
-**The files are manipulated on demand of the HTML, the transformations are limited to only solve the imports.**
+1. All import requires the use of extension, example `./my.js`.
+2. All relative resources require the use of the `./` or `../` pattern.
 
 ## Dev mode
 
-Development mode launches a server whose file context is associated with a specific folder.
+This mode is designed to serve content from an HTML file and process the content served on demand according to the type.
 
 ```bash
 npx devserver dev <src>
-## example 1
-npm devserver dev src
-## example 2
-npm devserver dev site
+## Directory example
+src
+  ├──index.js
+  └──index.html
+## Script
+npx devserver dev src
 ```
 
-### Options
+### Build mode flag
 
-| flag    | descripcion                                              |
-| ------- | -------------------------------------------------------- |
-| `--cdn` | NPM dependencies are resolved from a CDN                 |
-| `--ssl` | enable the use of http2 + ssl                            |
-| `--spa` | allows associating an html file to solve the lost routes |
+`--port [port]`: Modify the default port `80`.
+
+`--spa [file]`: The unresolved requests are redirected to the file to associate.
+
+`--jsxImportSource [jsxImportSource]`: allows to associate the package to use for jsx-runtime.
+
+`--ssl`: enables the use of HTTP2 with SSL.
+
+`--cdn`: Resolve NPM packages from a CDN.
 
 ## Build mode
 
+This mode packages the site or application according to the export pattern, example:
+
 ```bash
-# step 1
-npm install @devserver/build
-# step 2
+npx devserver build <src> <dest>
+## Example
 npx devserver build src/*.html public
 ```
 
-The export is selective based on expressions, always keep in the expression an origin since this allows to generate resolutions from the origin, example `/utils.js`.
+The previous example will export all the asset files that are related to the files captured by the expression.
 
-### Options
+### Build mode flag
 
-| flag          | descripcion                                                           |
-| ------------- | --------------------------------------------------------------------- |
-| `--href`      | Add a path prefix for assets in an HTML file                          |
-| `--minify`    | Minify JS and CSS code                                                |
-| `--sourcemap` | Enable sourcemap generation for JS files                              |
-| `--external`  | EnIt allows declaring files that should not be considered as external |
+`--jsxImportSource [jsxImportSource]`: allows to associate the package to use for jsx-runtime.
+
+`--cdn`: Resolve NPM packages from a CDN.
+
+`--minify`: Minify JS and CSS code.
+
+`--href [href]`: Associate a prefix for file resolution.
+
+`--external [external]`: Associate external dependencies manually.
+
+### Build rule
+
+1. The path must always start from a static folder, example:
+
+```bash
+src/** ## `src` is the static path
+src/site-1/** ## `src/site-1` is the static path
+```
+
+2. All relative import requires the use of extension.
