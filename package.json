@@ -4,6 +4,7 @@
     "type": "module",
     "version": "0.12.2",
     "scripts": {
+        "example:help": "node src/cli.js --help",
         "example:dev": "node src/cli.js dev example --port 8080 --debug --jsxImportSource atomico",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080 --jsxImportSource atomico",
         "example:build:cjs": "node ./cli.cjs build example/**/*.html public --jsxImportSource atomico --href age/master",

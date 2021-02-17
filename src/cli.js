@@ -4,7 +4,7 @@ import { createServer } from "./server.js";
 import { createWatch } from "./watch.js";
 import { log } from "./utils.js";
 
-const command = cac("my-cli").version("PKG.VERSION");
+const command = cac("devserver").version("PKG.VERSION");
 
 command
     .command("dev <src>", "...")
@@ -109,5 +109,7 @@ command
             }
         }
     );
+
+command.help();
 
 command.parse(process.argv);
