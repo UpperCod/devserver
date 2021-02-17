@@ -9,7 +9,7 @@ const command = cac("my-cli").version("PKG.VERSION");
 command
     .command("dev <src>", "...")
     .option("--port [port]", "port for  server")
-    .option("--spa", "page to resolve lost requests", "")
+    .option("--spa [file]", "page to resolve lost requests", "")
     .option(
         "--jsxImportSource [jsxImportSource]",
         "Add support to jsx-runtime",
@@ -66,7 +66,7 @@ command
 
 command
     .command("build <src> <dest>")
-    .option("--minify", "minify the js code")
+    .option("--minify", "minify the JS and CSS code")
     .option(
         "--href [href]",
         "associates a prefix for the output of assets declared in html files"
