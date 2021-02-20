@@ -32,9 +32,9 @@
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
         "@devserver/build-core": "workspace:*",
+        "csso": "4.0.2",
         "postcss": "^8.2.2",
-        "postcss-csso": "^5.0.0",
-        "csso": "4.0.2"
+        "postcss-csso": "^5.0.0"
     },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
