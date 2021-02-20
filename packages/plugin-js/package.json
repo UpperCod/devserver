@@ -1,7 +1,7 @@
 {
     "name": "@devserver/plugin-js",
     "type": "module",
-    "version": "0.12.3",
+    "version": "0.13.0",
     "description": "build for @devserver/cli",
     "main": "./plugin-js.cjs",
     "module": "./src/plugin-js.js",
@@ -31,12 +31,13 @@
     },
     "homepage": "https://github.com/UpperCod/devserver#readme",
     "dependencies": {
+        "@devserver/build-core": "workspace:*",
         "@devserver/resolve": "workspace:*",
-        "@devserver/transform-js": "workspace:*"
+        "@devserver/transform-js": "workspace:*",
+        "csso": "4.0.2"
     },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
-        "@devserver/build-core": "workspace:*",
         "@rollup/plugin-commonjs": "^17.0.0",
         "@rollup/plugin-node-resolve": "9.0.0",
         "@uppercod/hash": "^1.1.1",

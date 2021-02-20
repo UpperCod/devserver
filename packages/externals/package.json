@@ -1,7 +1,7 @@
 {
     "name": "@devserver/external",
     "type": "module",
-    "version": "0.12.3",
+    "version": "0.13.0",
     "description": "build for @devserver/cli",
     "main": "./external.cjs",
     "module": "./src/external.js",

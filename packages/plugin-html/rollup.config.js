@@ -1,5 +1,4 @@
 import renameExtensions from "@betit/rollup-plugin-rename-extensions";
-
 export default {
     input: ["./src/plugin-html.js"],
     output: {

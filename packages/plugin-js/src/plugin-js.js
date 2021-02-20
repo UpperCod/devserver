@@ -9,9 +9,16 @@ export { isJs } from "./plugin-resolve.js";
  * @param {string} options.base
  * @param {boolean|string} [options.cdn]
  * @param {string} [options.jsxImportSource] - Associate the alias for jsx-runtime
+ * @param {boolean} [options.minifyCssLiteral] - Associate the alias for jsx-runtime
  * @returns {import("@devserver/build-core").Plugin}
  */
-export const pluginJs = ({ external, base, cdn, jsxImportSource }) => ({
+export const pluginJs = ({
+    external,
+    base,
+    cdn,
+    jsxImportSource,
+    minifyCssLiteral,
+}) => ({
     async loaded({ output, options, load, set }) {
         /**
          * @type {import("@devserver/build-core").Ref[]}
@@ -38,7 +45,13 @@ export const pluginJs = ({ external, base, cdn, jsxImportSource }) => ({
          */
         const plugins = [
             pluginChunk(assets),
-            pluginResolve({ base, cdn, load, jsxImportSource }),
+            pluginResolve({
+                base,
+                cdn,
+                load,
+                jsxImportSource,
+                minifyCssLiteral,
+            }),
         ];
 
         if (options.minify) {

@@ -42,12 +42,12 @@ importers:
   packages/build:
     dependencies:
       '@devserver/build-core': link:../build-core
-      '@devserver/plugin-css': link:../plugin-css
-      '@devserver/plugin-html': link:../plugin-html
-      '@devserver/plugin-js': link:../plugin-js
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@devserver/external': link:../externals
+      '@devserver/plugin-css': link:../plugin-css
+      '@devserver/plugin-html': link:../plugin-html
+      '@devserver/plugin-js': link:../plugin-js
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.1
       '@rollup/plugin-json': 4.1.0_rollup@2.38.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.38.1
@@ -112,16 +112,18 @@ importers:
       ava: ^3.10.1
       rollup: ^2.35.1
   packages/plugin-css:
+    dependencies:
+      '@devserver/build-core': link:../build-core
+      csso: 4.0.2
+      postcss: 8.2.4
+      postcss-csso: 5.0.0_postcss@8.2.4
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/build-core': link:../build-core
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.1
       '@rollup/plugin-json': 4.1.0_rollup@2.38.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.38.1
       ava: 3.15.0
       builtin-modules: 3.2.0
-      postcss: 8.2.4
-      postcss-csso: 5.0.0_postcss@8.2.4
       rollup: 2.38.1
       rollup-plugin-terser: 7.0.2_rollup@2.38.1
     specifiers:
@@ -132,14 +134,16 @@ importers:
       '@rollup/plugin-node-resolve': 9.0.0
       ava: ^3.10.1
       builtin-modules: ^3.1.0
+      csso: 4.0.2
       postcss: ^8.2.2
       postcss-csso: ^5.0.0
       rollup: ^2.35.1
       rollup-plugin-terser: ^7.0.2
   packages/plugin-html:
+    dependencies:
+      '@devserver/build-core': link:../build-core
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/build-core': link:../build-core
       '@uppercod/hash': 1.1.1
       ava: 3.15.0
       builtin-modules: 3.2.0
@@ -153,11 +157,12 @@ importers:
       rollup: ^2.35.1
   packages/plugin-js:
     dependencies:
+      '@devserver/build-core': link:../build-core
       '@devserver/resolve': link:../resolve
       '@devserver/transform-js': link:../transform-js
+      csso: 4.0.2
     devDependencies:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
-      '@devserver/build-core': link:../build-core
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.38.1
       '@uppercod/hash': 1.1.1
@@ -176,6 +181,7 @@ importers:
       '@uppercod/hash': ^1.1.1
       ava: ^3.10.1
       builtin-modules: ^3.1.0
+      csso: 4.0.2
       rollup: ^2.35.1
       rollup-plugin-terser: ^7.0.2
       terser: ^5.5.1
@@ -215,6 +221,7 @@ importers:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.38.1
+      '@uppercod/str-fragment': 1.3.0
       ava: 3.15.0
       merge-source-map: 1.1.0
       rollup: 2.38.1
@@ -225,6 +232,7 @@ importers:
       '@devserver/replace-import': workspace:*
       '@rollup/plugin-commonjs': ^17.0.0
       '@rollup/plugin-node-resolve': 9.0.0
+      '@uppercod/str-fragment': ^1.3.0
       ava: ^3.10.1
       merge-source-map: ^1.1.0
       rollup: ^2.35.1
@@ -462,6 +470,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-QMm3SQ/TfaeiWLgmq3kMsTac2x8gpNOs6pZ5vuhZfR5sobLe/U9EwU0RoXXLsM7jPh0+J8gwYHS4lvum0Z6uFQ==
+  /@uppercod/str-fragment/1.3.0:
+    dev: true
+    resolution:
+      integrity: sha512-xxExV5oxW5rDRfUHUdU8Ojf5adQ/IpKYfbEfMZmt4nhD1G3UMt7UPpZXk0689fVT7+KdV5Y4cm5m7kVhHRsaJg==
   /accepts/1.3.7:
     dependencies:
       mime-types: 2.1.28
@@ -953,7 +965,7 @@ packages:
     resolution:
       integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
   /colorette/1.2.1:
-    dev: true
+    dev: false
     resolution:
       integrity: sha512-puCDz0CzydiSYOrnXpz/PKd69zRrribezjtE9yd4zvytoRc8+RY/KJPvtPFKZS3E3wP6neGyMe0vOTlHO5L3Pw==
   /commander/2.20.3:
@@ -1083,19 +1095,36 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
+  /css-tree/1.0.0-alpha.37:
+    dependencies:
+      mdn-data: 2.0.4
+      source-map: 0.6.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-DMxWJg0rnz7UgxKT0Q1HU/L9BeJI0M6ksor0OgqOnF+aRCDWg/N2641HmVyU9KVIu0OVVWOb2IpC9A+BJRnejg==
   /css-tree/1.1.2:
     dependencies:
       mdn-data: 2.0.14
       source-map: 0.6.1
-    dev: true
+    dev: false
     engines:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-wCoWush5Aeo48GLhfHPbmvZs59Z+M7k5+B1xDnXbdWNcEF423DoFdqSWE0PM5aNk5nI5cp1q7ms36zGApY/sKQ==
+  /csso/4.0.2:
+    dependencies:
+      css-tree: 1.0.0-alpha.37
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-kS7/oeNVXkHWxby5tHVxlhjizRCSv8QdU7hB2FpdAibDU8FjTAolhNjKNTiLzXtUrKT6HwClE81yXwEk1309wg==
   /csso/4.2.0:
     dependencies:
       css-tree: 1.1.2
-    dev: true
+    dev: false
     engines:
       node: '>=8.0.0'
     resolution:
@@ -2039,9 +2068,13 @@ packages:
     resolution:
       integrity: sha512-BUiRtTtV39LIJwinWBjqVsU9xhdnz7/i889V859IBFpuqGAj6LuOvHv5XLbgZ2R7ptJoJaEcxkv88/h25T7Ciw==
   /mdn-data/2.0.14:
-    dev: true
+    dev: false
     resolution:
       integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==
+  /mdn-data/2.0.4:
+    dev: false
+    resolution:
+      integrity: sha512-iV3XNKw06j5Q7mi6h+9vbx23Tv7JkjEVgKHW4pimwyDGWm0OIQntJJ+u1C6mg6mK1EaTv42XQ7w76yuzH7M2cA==
   /media-typer/0.3.0:
     dev: true
     engines:
@@ -2175,7 +2208,7 @@ packages:
     resolution:
       integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==
   /nanoid/3.1.20:
-    dev: true
+    dev: false
     engines:
       node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
     hasBin: true
@@ -2462,7 +2495,7 @@ packages:
     dependencies:
       csso: 4.2.0
       postcss: 8.2.4
-    dev: true
+    dev: false
     engines:
       node: '>=10.12.0'
     peerDependencies:
@@ -2474,7 +2507,7 @@ packages:
       colorette: 1.2.1
       nanoid: 3.1.20
       source-map: 0.6.1
-    dev: true
+    dev: false
     engines:
       node: ^10 || ^12 || >=14
     resolution:
@@ -2828,7 +2861,6 @@ packages:
     resolution:
       integrity: sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
   /source-map/0.6.1:
-    dev: true
     engines:
       node: '>=0.10.0'
     resolution:

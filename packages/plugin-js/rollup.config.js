@@ -12,7 +12,7 @@ export default {
         format: "cjs",
         sourcemap: false,
     },
-    external: Object.keys(pkg.dependencies).concat(builtins),
+    external: builtins.concat(Object.keys(pkg.dependencies)),
     plugins: [
         resolve(),
         commonjs(),

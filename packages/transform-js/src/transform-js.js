@@ -1,6 +1,7 @@
 import path from "path";
 import { transform } from "sucrase";
 import { replaceImport } from "@devserver/replace-import";
+import { getFragments, walkFragments } from "@uppercod/str-fragment";
 import merge from "merge-source-map";
 
 /**
@@ -9,6 +10,10 @@ import merge from "merge-source-map";
  * @returns {boolean}
  */
 export const isJs = (file) => /\.(mjs|js|jsx|ts|tsx)/.test(file);
+/**
+ *
+ */
+const cssLiteralOpen = /(\/\*css\s*\*\/\s*|css)`/;
 
 /**
  * Transfroma thanks to Sucrase code considered as JS
@@ -42,7 +47,12 @@ export async function transformJs({
         jsxFragmentPragma: "jsx",
     };
 
-    let { jsxImportSource, jsxPragma, jsxFragmentPragma } = optionsTransform;
+    let {
+        jsxImportSource,
+        jsxPragma,
+        jsxFragmentPragma,
+        cssLiteral,
+    } = optionsTransform;
 
     if (jsxImportSource) {
         jsxPragma = "_jsx";
@@ -66,7 +76,7 @@ export async function transformJs({
     result.code = resultTransform.code;
     result.map = resultTransform.sourceMap;
 
-    if (/import|export/.test(result.code) || jsxImportSource) {
+    if (/import|export/.test(result.code) || jsxImportSource || cssLiteral) {
         /**
          *
          * @param {string} src
@@ -96,6 +106,21 @@ export async function transformJs({
             }
         );
 
+        if (cssLiteral && cssLiteralOpen.test(result.code)) {
+            const cssInline = getFragments(result.code, {
+                open: cssLiteralOpen,
+                end: /`/,
+            });
+
+            walkFragments(result.code, cssInline, (block) => {
+                resultReplaceImport.overwrite(
+                    block.open.indexOpen,
+                    block.end.indexEnd,
+                    cssLiteral(block)
+                );
+            });
+        }
+
         if (jsxImportSource && use.includes("jsx")) {
             resultReplaceImport.prepend(
                 `import {jsx as _jsx} from "${resolve(
@@ -105,6 +130,7 @@ export async function transformJs({
         }
 
         result.code = resultReplaceImport.toString();
+
         result.map = merge(
             result.map,
             resultReplaceImport.generateMap({
@@ -123,4 +149,5 @@ export async function transformJs({
  * @property {string} [jsxPragma]
  * @property {string} [jsxFragmentPragma]
  * @property {string} [jsxImportSource]
+ * @property {(block:import("@uppercod/str-fragment").CallbackParam)=>string} [cssLiteral]
  */

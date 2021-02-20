@@ -68,6 +68,10 @@ command
     .command("build <src> <dest>")
     .option("--minify", "minify the JS and CSS code")
     .option(
+        "--minifyCssLiteral",
+        "Experimental. Minify the css code associated with template literals"
+    )
+    .option(
         "--href [href]",
         "associates a prefix for the output of assets declared in html files"
     )
@@ -85,7 +89,15 @@ command
         async (
             src = "./",
             dest = "",
-            { minify, href, external, cdn, sourcemap, jsxImportSource }
+            {
+                minify,
+                href,
+                external,
+                cdn,
+                sourcemap,
+                jsxImportSource,
+                minifyCssLiteral,
+            }
         ) => {
             const { build } = await import("@devserver/build");
             log(`Build starting from ${src} to ${dest}...`);
@@ -102,6 +114,7 @@ command
                     cdn,
                     sourcemap,
                     jsxImportSource,
+                    minifyCssLiteral,
                 });
                 log(`Build completed!`);
             } catch (e) {

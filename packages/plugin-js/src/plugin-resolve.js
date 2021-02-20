@@ -2,6 +2,7 @@ import path from "path";
 import { resolve } from "@devserver/resolve";
 import { transformJs } from "@devserver/transform-js";
 export { isJs } from "@devserver/transform-js";
+import csso from "csso";
 /**
  * Resolves the path of the resources only if they exist in NPM
  * @param {Object} options
@@ -9,9 +10,16 @@ export { isJs } from "@devserver/transform-js";
  * @param {boolean|string} options.cdn - define the root directory of the assets
  * @param {(src:string,asset:boolean)=>any} options.load - define the root directory of the assets
  * @param {string} [options.jsxImportSource] - Associate the alias for jsx-runtime
+ * @param {boolean} [options.minifyCssLiteral] - Associate the alias for jsx-runtime
  * @returns {import("rollup").Plugin}
  */
-export const pluginResolve = ({ base, cdn, load, jsxImportSource }) => ({
+export const pluginResolve = ({
+    base,
+    cdn,
+    load,
+    jsxImportSource,
+    minifyCssLiteral,
+}) => ({
     name: "plugin-resolve",
     resolveId(source, importer) {
         // ignore dependency if this is already a url
@@ -46,7 +54,19 @@ export const pluginResolve = ({ base, cdn, load, jsxImportSource }) => ({
              */
             load: (src) =>
                 load(path.join(path.dirname(source), src), true).link.href,
-            transform: { jsxImportSource },
+            transform: {
+                jsxImportSource,
+                cssLiteral:
+                    minifyCssLiteral &&
+                    ((block) => {
+                        return (
+                            block.open.args[0] +
+                            "`" +
+                            csso.minify(block.content).css +
+                            "`"
+                        );
+                    }),
+            },
         });
     },
 });
