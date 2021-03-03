@@ -1,7 +1,7 @@
 {
     "name": "@devserver/plugin-js",
     "type": "module",
-    "version": "0.13.0",
+    "version": "0.14.0",
     "description": "build for @devserver/cli",
     "main": "./plugin-js.cjs",
     "module": "./src/plugin-js.js",
@@ -33,8 +33,7 @@
     "dependencies": {
         "@devserver/build-core": "workspace:*",
         "@devserver/resolve": "workspace:*",
-        "@devserver/transform-js": "workspace:*",
-        "csso": "4.0.2"
+        "@devserver/transform-js": "workspace:*"
     },
     "devDependencies": {
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",

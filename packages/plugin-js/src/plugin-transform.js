@@ -2,21 +2,22 @@ import path from "path";
 import { resolve } from "@devserver/resolve";
 import { transformJs } from "@devserver/transform-js";
 export { isJs } from "@devserver/transform-js";
-import csso from "csso";
 /**
  * Resolves the path of the resources only if they exist in NPM
  * @param {Object} options
  * @param {string} options.base - define the root directory of the assets
  * @param {boolean|string} options.cdn - define the root directory of the assets
  * @param {(src:string,asset:boolean)=>any} options.load - define the root directory of the assets
+ * @param {(ext:string,code:string)=>Promise<string>} options.parse - define the root directory of the assets
  * @param {string} [options.jsxImportSource] - Associate the alias for jsx-runtime
  * @param {boolean} [options.minifyCssLiteral] - Associate the alias for jsx-runtime
  * @returns {import("rollup").Plugin}
  */
-export const pluginResolve = ({
+export const pluginTransform = ({
     base,
     cdn,
     load,
+    parse,
     jsxImportSource,
     minifyCssLiteral,
 }) => ({
@@ -58,11 +59,11 @@ export const pluginResolve = ({
                 jsxImportSource,
                 cssLiteral:
                     minifyCssLiteral &&
-                    ((block) => {
+                    (async (block) => {
                         return (
                             block.open.args[0] +
                             "`" +
-                            csso.minify(block.content).css +
+                            (await parse("css", block.content)) +
                             "`"
                         );
                     }),

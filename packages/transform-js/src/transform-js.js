@@ -112,13 +112,19 @@ export async function transformJs({
                 end: /`/,
             });
 
-            walkFragments(result.code, cssInline, (block) => {
+            const task = [];
+
+            walkFragments(result.code, cssInline, async (block) => {
+                const resolve = cssLiteral(block);
+                task.push(resolve);
                 resultReplaceImport.overwrite(
                     block.open.indexOpen,
                     block.end.indexEnd,
-                    cssLiteral(block)
+                    await resolve
                 );
             });
+
+            await Promise.all(task);
         }
 
         if (jsxImportSource && use.includes("jsx")) {
@@ -149,5 +155,5 @@ export async function transformJs({
  * @property {string} [jsxPragma]
  * @property {string} [jsxFragmentPragma]
  * @property {string} [jsxImportSource]
- * @property {(block:import("@uppercod/str-fragment").CallbackParam)=>string} [cssLiteral]
+ * @property {(block:import("@uppercod/str-fragment").CallbackParam)=>Promise<string>} [cssLiteral]
  */

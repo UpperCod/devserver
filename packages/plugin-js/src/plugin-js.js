@@ -1,8 +1,8 @@
 import { rollup } from "rollup";
 import { pluginChunk } from "./plugin-chunk.js";
-import { pluginResolve, isJs } from "./plugin-resolve.js";
+import { pluginTransform, isJs } from "./plugin-transform.js";
 import { pluginTerser } from "./plugin-terser.js";
-export { isJs } from "./plugin-resolve.js";
+export { isJs } from "./plugin-transform.js";
 /**
  * @param {Object} options
  * @param {string[]} options.external
@@ -19,7 +19,7 @@ export const pluginJs = ({
     jsxImportSource,
     minifyCssLiteral,
 }) => ({
-    async loaded({ output, options, load, set }) {
+    async loaded({ output, options, load, set, parse }) {
         /**
          * @type {import("@devserver/build-core").Ref[]}
          */
@@ -45,10 +45,11 @@ export const pluginJs = ({
          */
         const plugins = [
             pluginChunk(assets),
-            pluginResolve({
+            pluginTransform({
                 base,
                 cdn,
                 load,
+                parse,
                 jsxImportSource,
                 minifyCssLiteral,
             }),

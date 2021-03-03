@@ -113,6 +113,7 @@ export class Build {
      */
     set = (id, { copy, asset, load } = {}) => {
         id = path.relative(this.options.cwd || cwd, id);
+
         if (!this.output[id]) {
             this.output[id] = this.ref(id, {
                 copy,
@@ -149,6 +150,19 @@ export class Build {
         };
     };
     /**
+     * Generates a virtual file not written but that will be sent to the process queue
+     * @param {string} ext
+     * @param {string} content
+     * @returns {Promise<string>}
+     */
+    parse = async (ext, content) => {
+        const ref = this.load(hash(content) + "." + ext);
+        ref.virtual = true;
+        ref.read = async () => content;
+        await ref.task;
+        return ref.code || "";
+    };
+    /**
      * Wait for the resolution of the tasks and
      * clean the already expected ones
      */
@@ -182,6 +196,7 @@ export class Build {
         return Promise.all([
             ...Object.keys(output)
                 .map((id) => output[id])
+                .filter(({ virtual }) => !virtual)
                 .map(async ({ id, copy, code, link, map }) => {
                     const fileDest = path.join(options.dest, link.dest);
                     await prepareDir(fileDest);
@@ -225,6 +240,7 @@ export class Build {
  * @property {any} [map]
  * @property {boolean} [copy]
  * @property {boolean} [asset]
+ * @property {boolean} [virtual]
  * @property {Link} link
  * @property {(to:string)=>string} resolve
  * @property {Promise<any>} [task]
