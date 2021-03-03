@@ -6,6 +6,7 @@ importers:
       '@devserver/resolve': link:packages/resolve
       '@devserver/transform-js': link:packages/transform-js
     devDependencies:
+      '@atomico/kit': 2.0.0
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@devserver/build': link:packages/build
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.1
@@ -21,6 +22,7 @@ importers:
       rollup: 2.38.1
       rollup-plugin-terser: 7.0.2_rollup@2.38.1
     specifiers:
+      '@atomico/kit': ^2.0.0
       '@betit/rollup-plugin-rename-extensions': ^0.1.0
       '@devserver/build': workspace:*
       '@devserver/build-core': workspace:*
@@ -221,7 +223,7 @@ importers:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.38.1
-      '@uppercod/str-fragment': 1.3.0
+      '@uppercod/str-fragment': 1.3.2
       ava: 3.15.0
       merge-source-map: 1.1.0
       rollup: 2.38.1
@@ -232,7 +234,7 @@ importers:
       '@devserver/replace-import': workspace:*
       '@rollup/plugin-commonjs': ^17.0.0
       '@rollup/plugin-node-resolve': 9.0.0
-      '@uppercod/str-fragment': ^1.3.0
+      '@uppercod/str-fragment': 1.3.2
       ava: ^3.10.1
       merge-source-map: ^1.1.0
       rollup: ^2.35.1
@@ -240,6 +242,13 @@ importers:
       sucrase: ^3.17.0
 lockfileVersion: 5.2
 packages:
+  /@atomico/kit/2.0.0:
+    dependencies:
+      '@uppercod/exp-route': 1.2.1
+      atomico: 1.12.3
+    dev: true
+    resolution:
+      integrity: sha512-mODMISzZ7dW3k7PGKaNpBq6J3Wv+faKjad84W9hKYGEb2Qjicamql4nQ7ZkDwsK0QGckiXNPBJSx7LNXm3bRRg==
   /@babel/code-frame/7.12.11:
     dependencies:
       '@babel/highlight': 7.10.4
@@ -470,10 +479,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-QMm3SQ/TfaeiWLgmq3kMsTac2x8gpNOs6pZ5vuhZfR5sobLe/U9EwU0RoXXLsM7jPh0+J8gwYHS4lvum0Z6uFQ==
-  /@uppercod/str-fragment/1.3.0:
+  /@uppercod/str-fragment/1.3.2:
     dev: true
     resolution:
-      integrity: sha512-xxExV5oxW5rDRfUHUdU8Ojf5adQ/IpKYfbEfMZmt4nhD1G3UMt7UPpZXk0689fVT7+KdV5Y4cm5m7kVhHRsaJg==
+      integrity: sha512-6CmcjBa6duDTvlWKFfPTlx4zhitZbC01SMkL5X3CfmnPuXbMJ7SjwM/jW68vrIRfdgV1w+iignJj+4dfDtq2NA==
   /accepts/1.3.7:
     dependencies:
       mime-types: 2.1.28
@@ -612,6 +621,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-DxRTefkO/F1w0i2XThnKhy+zCKpgpIyK1nQsHOAdgVAf1a043ApZwKdg010R/C8A6iHowDKojjdyhBhUqS8dBw==
+  /atomico/1.12.3:
+    dev: true
+    resolution:
+      integrity: sha512-Lcg2t8TvZ1m2fFPNAfZ6wfM5JP9c1SrxrBFEMOGrEVzKQ0+Oc8yAxKtKOC1K8H/fQYXXyIIotLp6POfyoK8Scw==
   /ava/3.15.0:
     dependencies:
       '@concordance/react': 2.0.0

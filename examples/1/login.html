@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atomico - Started</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./components/formilk.css" />
+    <script async type="module" src="./components/formilk.js"></script>
+  </head>
+  <body>
+    <main class="formilk_theme page">
+      <section class="section">
+        <form>
+          <formilk-card style="max-width: 40rem">
+            <h1 slot="header">Login</h1>
+            <formilk-input
+              name="user"
+              placeholder="Username"
+              type="text"
+              name="user"
+              required
+            >
+              <formilk-icon slot="icon" type="user"></formilk-icon>
+            </formilk-input>
+            <formilk-input
+              placeholder="Password"
+              type="password"
+              name="password"
+              required
+            >
+              <formilk-icon slot="icon" type="key"></formilk-icon>
+            </formilk-input>
+            <div>
+              <formilk-label>
+                <formilk-input-checkbox
+                  name="toggle"
+                  checked
+                ></formilk-input-checkbox>
+                <p>Remember login on this device</p>
+              </formilk-label>
+            </div>
+            <formilk-button>Enviar</formilk-button>
+          </formilk-card>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
