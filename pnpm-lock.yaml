@@ -223,7 +223,7 @@ importers:
       '@betit/rollup-plugin-rename-extensions': 0.1.0
       '@rollup/plugin-commonjs': 17.0.0_rollup@2.38.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.38.1
-      '@uppercod/str-fragment': 1.3.2
+      '@uppercod/str-fragment': 1.3.3
       ava: 3.15.0
       merge-source-map: 1.1.0
       rollup: 2.38.1
@@ -234,7 +234,7 @@ importers:
       '@devserver/replace-import': workspace:*
       '@rollup/plugin-commonjs': ^17.0.0
       '@rollup/plugin-node-resolve': 9.0.0
-      '@uppercod/str-fragment': 1.3.2
+      '@uppercod/str-fragment': 1.3.3
       ava: ^3.10.1
       merge-source-map: ^1.1.0
       rollup: ^2.35.1
@@ -479,10 +479,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-QMm3SQ/TfaeiWLgmq3kMsTac2x8gpNOs6pZ5vuhZfR5sobLe/U9EwU0RoXXLsM7jPh0+J8gwYHS4lvum0Z6uFQ==
-  /@uppercod/str-fragment/1.3.2:
+  /@uppercod/str-fragment/1.3.3:
     dev: true
     resolution:
-      integrity: sha512-6CmcjBa6duDTvlWKFfPTlx4zhitZbC01SMkL5X3CfmnPuXbMJ7SjwM/jW68vrIRfdgV1w+iignJj+4dfDtq2NA==
+      integrity: sha512-skkky/A8C6ZoDFuyBgxwfXxsz8QbuvRMt9+2TPdftR+sUmwsqpvdpFLVZMqn8+i1NnWs0hj4y1RUWoKiQZMqPw==
   /accepts/1.3.7:
     dependencies:
       mime-types: 2.1.28

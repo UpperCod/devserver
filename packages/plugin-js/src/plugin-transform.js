@@ -59,14 +59,11 @@ export const pluginTransform = ({
                 jsxImportSource,
                 cssLiteral:
                     minifyCssLiteral &&
-                    (async (block) => {
-                        return (
-                            block.open.args[0] +
-                            "`" +
-                            (await parse("css", block.content)) +
-                            "`"
-                        );
-                    }),
+                    (async (block) =>
+                        block.open.args[0] +
+                        "`" +
+                        (await parse("css", block.content)) +
+                        "`"),
             },
         });
     },
