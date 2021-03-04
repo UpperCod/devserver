@@ -99,7 +99,7 @@ export const createServer = ({
                             const npmFolder = [folder, subpathname].join("/");
 
                             if (pkg != npmFolder) {
-                                setRedirect(res, npmFolder);
+                                setRedirect(res, "/npm/" + npmFolder);
                             } else {
                                 const file = await resolve(pkg);
 
