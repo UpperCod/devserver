@@ -96,25 +96,34 @@ export const createServer = ({
                             const [, folder, subpathname] = pkg.match(
                                 packageName
                             );
-                            const npmFolder = [folder, subpathname].join("/");
 
+                            const npmFolder = [folder, subpathname].join("/");
                             if (pkg != npmFolder) {
                                 setRedirect(res, "/npm/" + npmFolder);
                             } else {
                                 const file = await resolve(pkg);
 
-                                const ref = build.load(
-                                    file.href.replace("file:///", "")
+                                const absolute = file.href.replace(
+                                    "file:///",
+                                    ""
                                 );
 
-                                await ref.task;
+                                const [, npm] = absolute.split("node_modules/");
 
-                                setContentType(res, ref.id);
-
-                                if (ref.copy) {
-                                    return sendStream(res, file);
+                                if (pkg != npm) {
+                                    setRedirect(res, "/npm/" + npm);
                                 } else {
-                                    res.end(ref.code);
+                                    const ref = build.load(absolute);
+
+                                    await ref.task;
+
+                                    setContentType(res, ref.id);
+
+                                    if (ref.copy) {
+                                        return sendStream(res, file);
+                                    } else {
+                                        res.end(ref.code);
+                                    }
                                 }
                             }
                         },
