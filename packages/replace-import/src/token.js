@@ -16,7 +16,7 @@ export class Token {
     parse(input) {
         try {
             const [, type, scope = "", quote = ""] = input.match(
-                /(\w+)\s*(?:(.+)\s*from){0,1}\s*("|')/
+                /(\w+)\s*(?:(.+)\s*from){0,1}\s*("|')/s
             );
             this.scope = scope.trim();
             this.quote = quote;
