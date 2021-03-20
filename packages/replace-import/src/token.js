@@ -14,17 +14,21 @@ export class Token {
      *  @param {string} input
      */
     parse(input) {
-        const [, type, scope = "", quote = ""] = input.match(
-            /(\w+)\s*(?:(.+)\s*from){0,1}\s*("|')/
-        );
-        this.scope = scope.trim();
-        this.quote = quote;
-        this.type = type == "import" || type == "export" ? type : "";
-        if (!this.type) {
-            this.src =
-                this.src[0] == this.quote
-                    ? this.src.slice(1, this.src.length - 1)
-                    : this.src;
+        try {
+            const [, type, scope = "", quote = ""] = input.match(
+                /(\w+)\s*(?:(.+)\s*from){0,1}\s*("|')/
+            );
+            this.scope = scope.trim();
+            this.quote = quote;
+            this.type = type == "import" || type == "export" ? type : "";
+            if (!this.type) {
+                this.src =
+                    this.src[0] == this.quote
+                        ? this.src.slice(1, this.src.length - 1)
+                        : this.src;
+            }
+        } catch (e) {
+            this.toString = () => input;
         }
     }
     toString() {

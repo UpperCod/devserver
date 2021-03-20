@@ -12,7 +12,6 @@ export async function replaceImport(code, callback) {
     await init;
 
     const [imports] = parse(code);
-
     const tokens = await Promise.all(
         imports.map((part) => callback(new Token(code, part)))
     );

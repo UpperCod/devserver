@@ -1,3 +1,1 @@
-import { setup } from "@uppercod/markdown-inline";
-
-console.log(setup);
+import { useRoute } from "@atomico/kit/use-router";
