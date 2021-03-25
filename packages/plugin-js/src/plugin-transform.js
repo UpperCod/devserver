@@ -45,7 +45,7 @@ export const pluginTransform = ({
                   url.href.replace(/^file\:(\/|\\){2,3}/, "")
               );
     },
-    async transform(code, source) {
+    transform(code, source) {
         return transformJs({
             code,
             file: source,

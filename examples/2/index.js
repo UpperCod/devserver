@@ -1,4 +1,4 @@
-import {
+export {
     TitleLargeOne,
     TitleLargeTwo,
     TitleLargeTree,

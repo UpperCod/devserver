@@ -61,7 +61,7 @@ export const pluginJs = ({
 
         const bundle = await rollup({
             input: input.map((ref) => ref.id),
-            preserveEntrySignatures: false,
+            //preserveEntrySignatures: false,
             external: site ? [] : external,
             plugins,
         });
