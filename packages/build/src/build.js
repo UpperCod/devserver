@@ -16,7 +16,7 @@ import { getExternal } from "@devserver/external";
  * @param {string[]} [options.external] - minify the js code
  * @param {boolean} [options.cdn] - minify the js code
  * @param {string} [options.jsxImportSource] - Associate the alias for jsx-runtime
- * @param {string} [options.minifyCssLiteral] - Associate the alias for jsx-runtime
+ * @param {boolean} [options.minifyCssLiteral] - Associate the alias for jsx-runtime
  */
 export async function build({
     src,
@@ -63,6 +63,7 @@ export async function build({
             }),
         ]
     );
+
     (await glob(src))
         .map((file) => "./" + file)
         .forEach((input) => build.load(input));

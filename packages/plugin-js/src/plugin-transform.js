@@ -27,7 +27,7 @@ export const pluginTransform = ({
         if (/^http(s){0,1}\:\/\//.test(source))
             return { id: source, external: true };
         // In the opposite case, associate a resolution process
-        if (!importer) return source;
+        if (!importer) return null;
 
         return source[0] == "."
             ? null
@@ -38,7 +38,7 @@ export const pluginTransform = ({
                   id:
                       typeof cdn == "string"
                           ? cdn.replace("$", source)
-                          : `https://jspm.dev/${source}`,
+                          : `https://cdn.skypack.dev/${source}`,
                   external: true,
               }
             : resolve(source).then((url) =>

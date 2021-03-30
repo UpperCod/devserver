@@ -81,7 +81,8 @@ export async function transformJs({
          *
          * @param {string} src
          */
-        const resolve = (src) => (cdn ? `https://jspm.dev/${src}` : npm + src);
+        const resolve = (src) =>
+            cdn ? `https://cdn.skypack.dev/${src}` : npm + src;
 
         const resultReplaceImport = await replaceImport(
             result.code,

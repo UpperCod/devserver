@@ -58,10 +58,8 @@ export const pluginJs = ({
         if (options.minify) {
             plugins.push(pluginTerser({ sourcemap: options.sourcemap }));
         }
-
         const bundle = await rollup({
             input: input.map((ref) => ref.id),
-            //preserveEntrySignatures: false,
             external: site ? [] : external,
             plugins,
         });

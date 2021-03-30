@@ -2,7 +2,7 @@
     "name": "@devserver/cli",
     "description": "Minimalist development server",
     "type": "module",
-    "version": "0.15.6",
+    "version": "0.15.7",
     "scripts": {
         "example:help": "node src/cli.js --help",
         "example:dev": "node src/cli.js dev examples/2 --port 8080 --debug --jsxImportSource atomico",
