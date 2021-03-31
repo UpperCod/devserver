@@ -1,7 +1,7 @@
 {
     "name": "@devserver/plugin-js",
     "type": "module",
-    "version": "0.15.7",
+    "version": "0.15.8",
     "description": "build for @devserver/cli",
     "main": "./plugin-js.cjs",
     "module": "./src/plugin-js.js",

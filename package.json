@@ -2,13 +2,13 @@
     "name": "@devserver/cli",
     "description": "Minimalist development server",
     "type": "module",
-    "version": "0.15.7",
+    "version": "0.15.8",
     "scripts": {
         "example:help": "node src/cli.js --help",
         "example:dev": "node src/cli.js dev examples/2 --port 8080 --debug --jsxImportSource atomico",
         "example:dev:cjs": "node ./cli.cjs dev example --cdn --ssl --port 8080 --jsxImportSource atomico",
         "example:build:cjs": "node ./cli.cjs build examples/**/*.html public --jsxImportSource atomico --href age/master --minifyCssLiteral",
-        "example:build": "node src/cli.js build examples/2/**/*.html public",
+        "example:build": "node src/cli.js build examples/1/**/*.html public",
         "test": "ava",
         "build": "rollup -c",
         "publish:all": "pnpm run build && pnpm run test && pnpm publish -r",
@@ -30,7 +30,6 @@
         "@devserver/transform-js": "workspace:*"
     },
     "devDependencies": {
-        "@atomico/kit": "^2.2.0",
         "@betit/rollup-plugin-rename-extensions": "^0.1.0",
         "@devserver/build": "workspace:*",
         "@rollup/plugin-commonjs": "^17.0.0",
@@ -39,7 +38,6 @@
         "@uppercod/css-to-object": "^1.1.0",
         "@uppercod/exp-route": "^1.2.1",
         "@uppercod/markdown-inline": "^0.0.0",
-        "atomico": "^1.12.1",
         "ava": "^3.14.0",
         "cac": "^6.7.1",
         "htm": "^3.0.4",

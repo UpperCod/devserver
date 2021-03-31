@@ -1,4 +1,5 @@
 import { rollup } from "rollup";
+import { pluginExternal } from "./plugin-external.js";
 import { pluginChunk } from "./plugin-chunk.js";
 import { pluginTransform, isJs } from "./plugin-transform.js";
 import { pluginTerser } from "./plugin-terser.js";
@@ -44,6 +45,7 @@ export const pluginJs = ({
          * @type {import("rollup").Plugin[]}
          */
         const plugins = [
+            pluginExternal(external),
             pluginChunk(assets),
             pluginTransform({
                 base,
